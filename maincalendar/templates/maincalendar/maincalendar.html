@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>
+		{% for event in events%}
+			<p> {{ event.title }}</p>
+			<p> By {{ event.author }} on {{ event.date_posted }}</p>
+			<p> {{ event.description }}</p>
+			<p>________________________________________</p>
+		{% endfor %}
+	</h1>
+</body>
+</html>
