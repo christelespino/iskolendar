@@ -4,6 +4,12 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+'''
+02/05/2019
+Patrick Joseph Sanchez
+	added the Event class
+'''
+
 EVENT_TYPE = (
 	('seminar', 'SEMINAR'),
 	('workshop', 'WORKSHOP'),

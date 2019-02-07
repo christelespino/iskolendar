@@ -1,4 +1,9 @@
 #This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016
+'''
+02/05/2019
+Patrick Joseph Sanchez
+	added the url paths for Creating event and viewing the details of the event
+'''
 from django.urls import path
 from .views import EventDetailView, EventCreateView, EventUpdateView, EventDeleteView
 from . import views

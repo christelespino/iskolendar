@@ -1,4 +1,10 @@
 #This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016
+'''
+02/05/2019
+Patrick Joseph Sanchez
+	added the EventDetailView and EventCreateView classes, and the maincalendar function
+'''
+
 from django.shortcuts import render
 #from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
