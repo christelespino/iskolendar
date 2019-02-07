@@ -3,6 +3,9 @@
 02/05/2019
 Patrick Joseph Sanchez
 	added the EventDetailView and EventCreateView classes, and the maincalendar function
+02/06/2019
+Christel Anne Espino	
+	added the EventUpdateView and EventDeleteView classes	
 '''
 
 from django.shortcuts import render
