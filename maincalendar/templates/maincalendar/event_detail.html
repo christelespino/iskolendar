@@ -1,14 +1,19 @@
 <!--#This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<h1>
+{% extends "maincalendar/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<h4>
 		<p> {{ object.title }}</p>
-		<p> By {{ object.author }} on {{ object.date_posted }}</p>
+		<p> posted on {{ object.date_posted }}</p>
 		<p> {{ object.description }}</p>
-	</h1>
-</body>
-</html>
+		<p> start: {{ object.date_start }}	time: {{ object.time_start }} </p>
+		<p> end: {{ object.date_end}}	time: {{ object.time_end }} </p>
+		<p> event type: {{ object.event_type }} </p>
+		<p> venue: {{ object.venue }} </p>
+		<p> scope: {{ object.scope }} </p>
+		<p> limit: {{ object.limit }} </p>
+	</h4>
+	<div class="col-lg-12 mt-4">
+      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
+    </div>
+{% endblock content %}
