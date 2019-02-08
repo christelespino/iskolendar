@@ -13,7 +13,7 @@ from .models import Event
 
 def maincalendar(request):
 	context = {
-		'events' : Event.objects.all()
+		'events' : Event.objects.all().order_by('date_start')
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
 
