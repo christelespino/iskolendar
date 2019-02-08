@@ -2,7 +2,10 @@
 '''
 02/05/2019
 Patrick Joseph Sanchez
-	added the url paths for Creating event and viewing the details of the event
+	added the url paths for the index, creating event and viewing the details of the event
+02/06/2019
+Christel Anne Espino
+	added the url paths for updating event details and deleting event	
 '''
 from django.urls import path
 from .views import EventDetailView, EventCreateView, EventUpdateView, EventDeleteView

@@ -1,14 +1,19 @@
 #This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016
-from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
-from django.urls import reverse
 
 '''
 02/05/2019
 Patrick Joseph Sanchez
 	added the Event class
+02/06/2019
+Christel Anne Espino	
+	added choices for event type and scope, modified the Event model
 '''
+
+from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 EVENT_TYPE = (
 	('seminar', 'SEMINAR'),
