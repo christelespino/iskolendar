@@ -24,7 +24,7 @@ context = {
 	'org' : False
 }
 
-@login_required
+# @login_required
 def maincalendar(request):
 	context = {
 		'events' : Event.objects.all().order_by('date_start'),
@@ -33,7 +33,7 @@ def maincalendar(request):
 	return render(request, 'maincalendar/maincalendar.html', context)
 
 
-class EventDetailView(LoginRequiredMixin, DetailView):
+class EventDetailView(DetailView):
 	model = Event
 
 class EventCreateView(LoginRequiredMixin, CreateView):
