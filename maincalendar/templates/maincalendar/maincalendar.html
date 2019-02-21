@@ -5,6 +5,11 @@
 	Allure Tanquintic
 		modified display layout
  -->
+<!--
+	02/17/19
+	Patrick Joseph Sanchez
+		added condition in displaying the edit and delete buttons
+-->
 {% extends "maincalendar/index.html" %}
 {% block content %}
 	{% if events %}
@@ -14,8 +19,10 @@
 			<h5> {{ event.description }} </h5>
 			<div class="container mb-4">
 			  <a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
-	          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
-	          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
+			  {% if org%}
+		          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
+		          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
+		      {% endif %}
 	        </div>
 		{% endfor %}
 	{% else %}
