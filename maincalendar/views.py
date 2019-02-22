@@ -16,6 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.auth.models import User
+from datetime import datetime
 from .models import Event
 
 
@@ -32,6 +33,9 @@ def maincalendar(request):
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
 
+def daily_view(request):
+	day = datetime.strptime(request.GET.get('date'), '%b. %d, %Y')
+	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})
 
 class EventDetailView(DetailView):
 	model = Event

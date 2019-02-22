@@ -8,6 +8,7 @@ Christel Anne Espino
 	added the url paths for updating event details and deleting event	
 '''
 from django.urls import path, include
+from django.conf.urls import url
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from .views import EventDetailView, EventCreateView, EventUpdateView, EventDeleteView
@@ -20,4 +21,5 @@ urlpatterns = [
     path('event/<int:pk>/update', EventUpdateView.as_view(), name='event-update'),
     path('event/<int:pk>/delete', EventDeleteView.as_view(), name='event-delete'),
     path('', views.maincalendar, name = 'maincalendar'),
+    url(r'event/$', views.daily_view, name='daily-view'),
 ]
