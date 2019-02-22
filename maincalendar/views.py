@@ -37,7 +37,10 @@ def maincalendar(request):
 	return render(request, 'maincalendar/maincalendar.html', context)
 
 def daily_view(request):
-	day = datetime.strptime(request.GET.get('date'), '%b. %d, %Y')
+	try:
+		day = datetime.strptime(request.GET.get('date'), '%b. %d, %Y')
+	except ValueError:
+		day = datetime.strptime(request.GET.get('date'), '%B %d, %Y')
 	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})
 
 class EventDetailView(DetailView):
