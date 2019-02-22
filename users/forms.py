@@ -3,6 +3,9 @@
 02/17/19
 	Patrick Joseph Sanchez
 		extended the form for registration
+02/21/19
+	Allure Tanquintic
+		added fields for registration		
 '''
 
 from django import forms
