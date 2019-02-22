@@ -2,11 +2,14 @@
 
 '''
 02/05/2019
-Patrick Joseph Sanchez
-	added the Event class
+	Patrick Joseph Sanchez
+		added the Event class
 02/06/2019
-Christel Anne Espino	
-	added choices for event type and scope, modified the Event model
+	Christel Anne Espino	
+		added choices for event type and scope, modified the Event model
+02/17/2019
+	Patrick Joseph Sanchez
+		added the author foreign key attribute in Event model
 '''
 
 from django.db import models
@@ -46,7 +49,7 @@ class Event(models.Model):
 	venue = models.CharField(max_length = 500, default=None, blank=True, null=True)
 	scope = models.CharField(max_length = 50, default=None, blank=True, null=True, choices=SCOPE_CHOICES)
 	limit = models.IntegerField(default=None, blank=True, null=True)
-	#author = models.ForeignKey(User, on_delete = models.CASCADE)
+	author = models.ForeignKey(User, default = None, on_delete = models.CASCADE)
 
 	def __str__(self):
 		return self.title

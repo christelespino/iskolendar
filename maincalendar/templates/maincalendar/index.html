@@ -4,6 +4,12 @@
 Allure Tanquintic
   created the file
  -->
+
+<!-- 02/17/19
+Patrick Joseph Sanchez
+  added codeblocks above the block content for messages regarding registration of users (Lines 74-80)
+  added a connection url to logout (line 58-63)
+-->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +55,14 @@ Allure Tanquintic
                   <a class="nav-link">Settings</a>
                 </li>
                 <li class ="nav-item">
-                  <a class="nav-link">Logout</a>
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                  {% else %}
+                      <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                    </li>
+                    <li class ="nav-item">
+                      <a class="nav-link" href="{% url 'register' %}">Register</a>
+                  {% endif %}
                 </li>
             </ul>
           </div>
@@ -60,6 +73,13 @@ Allure Tanquintic
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              <div class = "alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
           {% block content %}{% endblock %}
         </div>
       </div>
