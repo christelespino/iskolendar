@@ -9,6 +9,9 @@
 02/17/19
 	Patrick Joseph Sanchez
 		added and implemented the loginrequired decorator, LoginRequiredMixin and UserPassesTestMixin
+02/21/19
+	Christel Anne Espino
+		added daily_view		
 '''
 
 from django.shortcuts import render

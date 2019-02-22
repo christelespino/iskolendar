@@ -5,7 +5,10 @@ Patrick Joseph Sanchez
 	added the url paths for the index, creating event and viewing the details of the event
 02/06/2019
 Christel Anne Espino
-	added the url paths for updating event details and deleting event	
+	added the url paths for updating event details and deleting event
+02/21/2019
+Christel Anne Espino
+	added the url path for daily view		
 '''
 from django.urls import path, include
 from django.conf.urls import url
