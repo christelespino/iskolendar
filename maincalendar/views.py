@@ -21,18 +21,22 @@ from django.views.generic import ListView, CreateView, DeleteView, UpdateView, D
 from django.contrib.auth.models import User
 from datetime import datetime
 from .models import Event, Announcement
+from django.contrib import messages
+from .announcement_form import AnnouncementForm
 
 
 context = {
 	'events' : Event.objects.all().order_by('date_start'),
-	'org' : False
+	'org' : False,
+	'announcements' : Announcement.objects.all().order_by('date_posted')
 }
 
 # @login_required
 def maincalendar(request):
 	context = {
 		'events' : Event.objects.all().order_by('date_start'),
-		'org' : request.user.is_staff
+		'org' : request.user.is_staff,
+		'announcements' : Announcement.objects.all().order_by('date_posted')
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
 
@@ -41,7 +45,7 @@ def daily_view(request):
 		day = datetime.strptime(request.GET.get('date'), '%b. %d, %Y')
 	except ValueError:
 		day = datetime.strptime(request.GET.get('date'), '%B %d, %Y')
-	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})
+	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})	
 
 class EventDetailView(DetailView):
 	model = Event
@@ -80,8 +84,14 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 			return False
 #____________________________________________________________________
 class AnnouncementCreateView(LoginRequiredMixin, CreateView):
-	model = Announcement
-	fields = ['event', 'body']
+	template_name = 'maincalendar/announcement_form.html'
+	form_class = AnnouncementForm
+
+	def get_form_kwargs(self):
+		kwargs = super(AnnouncementCreateView, self).get_form_kwargs()
+		kwargs['user'] = self.request.user
+		return kwargs
+
 	def form_valid(self, form):
 		form.instance.author = self.request.user
 		return super().form_valid(form)

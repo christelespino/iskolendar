@@ -31,3 +31,11 @@ h1, h2, h3, h4, h5, h6 {
 .btn-success{
   background-color: #005740;
 }
+
+.sticky-sidebar {
+    position: fixed;
+    width: 150px;
+    overflow-y: scroll;
+    top: 0;
+    bottom: 0;
+}
