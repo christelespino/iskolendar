@@ -15,6 +15,16 @@
 	Christel Anne Espino
 		added get request for daily view
 -->
+<!--
+	02/21/19
+	Christel Anne Espino
+		added get request for daily view
+-->
+<!--
+	03/08/19
+	Christel Anne Espino
+		added announcements sidebar
+-->
 {% extends "maincalendar/index.html" %}
 {% block content %}
 
@@ -28,7 +38,7 @@
 					<li class="list-group-item list-group-item-light">
 						<h6>{{ announcement.event }}</h6><br>
 						<p class="font-weight-light">{{ announcement.body }}</p>
-						{% if org%}
+						{% if org and id == announcement.author.pk %}
 				          <a class="btn btn-default" href="{% url 'announcement-update' announcement.id%}">Edit</a>
 				          <a class="btn btn-default" href="{% url 'announcement-delete' announcement.id%}">Delete</a>
 				      	{% endif %}
@@ -53,7 +63,7 @@
 			<h5> {{ event.description }} </h5>
 			<div class="container mb-4">
 			  <a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
-			  {% if org%}
+			  {% if org and id == event.author.pk %}
 		          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
 		          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
 		      {% endif %}

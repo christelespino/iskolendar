@@ -12,6 +12,9 @@
 02/21/19
 	Christel Anne Espino
 		added daily_view		
+03/06/2019
+	Patrick Joseph Sanchez
+    	added views for announcements
 '''
 
 from django.shortcuts import render
@@ -28,7 +31,8 @@ from .announcement_form import AnnouncementForm
 context = {
 	'events' : Event.objects.all().order_by('date_start'),
 	'org' : False,
-	'announcements' : Announcement.objects.all().order_by('date_posted')
+	'announcements' : Announcement.objects.all().order_by('date_posted'),
+	'id'  : 0
 }
 
 # @login_required
@@ -36,7 +40,8 @@ def maincalendar(request):
 	context = {
 		'events' : Event.objects.all().order_by('date_start'),
 		'org' : request.user.is_staff,
-		'announcements' : Announcement.objects.all().order_by('date_posted')
+		'announcements' : Announcement.objects.all().order_by('date_posted'),
+		'id'  : request.user.pk
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
 

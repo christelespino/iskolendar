@@ -4,6 +4,10 @@
   Allure Tanquintic
     created the file.
     no edits yet.
+
+  03/08/19
+  Christel Espino
+    added sticky sidebar  
 */
 body {
   background: #fafafa;
@@ -34,6 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sticky-sidebar {
     position: fixed;
+    height: 85%;
     width: 150px;
     overflow-y: scroll;
     top: 0;
