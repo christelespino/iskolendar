@@ -20,70 +20,203 @@
 	Christel Anne Espino
 		added announcements sidebar
 -->
-{% extends "maincalendar/index.html" %}
-{% block content %}
+<!--
+	03/22/19
+	Allure Tanquintic
+		fixed layout of announcement and calendar 
+ -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<title>Iskolendar</title>
 
-<!-- <div class="panel panel-default">
-<div class="panel-body"> -->
-<div class="container-fluid">
-<div class="row">	
-<div class="col-5 bg-light">	
-<div class="wrap"> 
-	<aside>
-		<h6>{{ date }}</h6>
-            <h4>Announcements</h4>
-            {% if announcements %}
-            {% for announcement in announcements %}	
-	            <ul class="list-group">
-					<li class="list-group-item list-group-item-light">
-						<h6>{{ announcement.event }}</h6><br>
-						<p class="font-weight-light">{{ announcement.body }}</p>
-						{% if org and id == announcement.author.pk %}
-				          <a class="btn btn-default" href="{% url 'announcement-update' announcement.id%}">Edit</a>
-				          <a class="btn btn-default" href="{% url 'announcement-delete' announcement.id%}">Delete</a>
-				      	{% endif %}
-					</li>
-		        </ul>
-		    {% endfor %}    
-           	{% else %}
-           		<p> No announcements this week. </p>
-           	{% endif %}
-           	{% if org%}
-           		<a class="btn btn-outline-success" align="center" href="{% url 'announcement-create' %}">New</a>	
-           	{% endif %}
-           	<a class="btn btn-outline-success" align="center" href="{% url 'announcement-view' %}">View All</a>
-	</aside>
-</div>
-</div> 
-    
-		<div class="col offset-1" id="main">
-            {% if events %}
-			{% for event in events %}
-			<h3> {{ event.title }}</h3>
-			<h6><form action="{% url 'daily-view' %}" method="GET">
-				<input type="hidden" value="{{ event.date_start }}" name="date" id="date">
-				<input type="submit" value="{{ event.date_start }}">  
-			</form></h6>
-			<h5> {{ event.description }} </h5>
-			<div class="container mb-4">
-			  <a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
-			  {% if org and id == event.author.pk %}
-		          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
-		          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
-		      {% endif %}
-	        </div>
-			{% endfor %}
-			{% else %}
-				<p> Nothing to display. </p>
-			{% endif %}
-			{% if org%}
-			<div class="col-lg-12 mb-4" align="center">
-				<a class="btn btn-outline-success" align="center" href="{% url 'event-create' %}">Add Event</a>
-			</div>
-			{% endif %}
-        </div> 
-</div>
-</div>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-{% endblock content %}
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="{% static 'maincalendar/main.css' %}">
+<link href="{% static 'maincalendar/calendar/packages/core/main.css' %}" rel='stylesheet'/>
+<link href="{% static 'maincalendar/calendar/packages/daygrid/main.css' %}" rel='stylesheet'/>
+<script src="{% static 'maincalendar/calendar/packages/core/main.js' %}"></script>
+<script src="{% static 'maincalendar/calendar/packages/interaction/main.js' %}"></script>
+<script src="{% static 'maincalendar/calendar/packages/daygrid/main.js' %}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var data = '{{ data }}';
+    // var json = JSON.parse(data);
+
+    // document.write(data);
+    var calendarEl = document.getElementById('calendar');
+    // var events = '{{ data|escapejs }}';
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid' ],
+      defaultDate: '2019-03-12',
+      editable: false,
+      eventLimit: true, // allow "more" link when too many events
+      events: data
+      // [
+      //   {
+      //     title: 'All Day Event',
+      //     start: '2019-03-01'
+      //   },
+      //   {
+      //     title: 'Long Event',
+      //     start: '2019-03-07',
+      //     end: '2019-03-10'
+      //   },
+      //   {
+      //     groupId: 999,
+      //     title: 'Repeating Event',
+      //     start: '2019-03-09T16:00:00'
+      //   },
+      //   {
+      //     groupId: 999,
+      //     title: 'Repeating Event',
+      //     start: '2019-03-16T16:00:00'
+      //   },
+      //   {
+      //     title: 'Conference',
+      //     start: '2019-03-11',
+      //     end: '2019-03-13'
+      //   },
+      //   {
+      //     title: 'Meeting',
+      //     start: '2019-03-12T10:30:00',
+      //     end: '2019-03-12T12:30:00'
+      //   },
+      //   {
+      //     title: 'Lunch',
+      //     start: '2019-03-12T12:00:00'
+      //   },
+      //   {
+      //     title: 'Meeting',
+      //     start: '2019-03-12T14:30:00'
+      //   },
+      //   {
+      //     title: 'Happy Hour',
+      //     start: '2019-03-12T17:30:00'
+      //   },
+      //   {
+      //     title: 'Dinner',
+      //     start: '2019-03-12T20:00:00'
+      //   },
+      //   {
+      //     title: 'Birthday Party',
+      //     start: '2019-03-13T07:00:00'
+      //   },
+      //   {
+      //     title: 'Click for Google',
+      //     url: 'http://google.com/',
+      //     start: '2019-03-28'
+      //   }
+      // ]
+    });
+
+    calendar.render();
+  });
+
+</script>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'maincalendar' %}">
+          <img src="{% static 'maincalendar/iskolendar-logo.png' %}" width="135" height="44.25"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              <li class ="nav-item active">
+                <a class="nav-link">Main Calendar
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class ="nav-item">
+                <a class="nav-link">My Calendar</a>
+              </li>
+              <li class ="nav-item">
+                <a class="nav-link">Settings</a>
+              </li>
+              <li class ="nav-item">
+                {% if user.is_authenticated %}
+                  <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                    <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                  </li>
+                  <li class ="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="columnsContainer">
+  	<div class="leftColumn">
+		{% if events %}
+		{% for event in events %}
+		<h3> {{ event.title }}</h3>
+		<h6><form action="{% url 'daily-view' %}" method="GET">
+			<input type="hidden" value="{{ event.date_start }}" name="date" id="date">
+			<input type="submit" value="{{ event.date_start }}">  
+		</form></h6>
+		<h5> {{ event.description }} </h5>
+		<div class="container mb-4">
+		  <a class="btn btn-success active mr-2" href="{% url 'event-detail' event.id%}">Details</a>
+		  {% if org and id == event.author.pk %}
+	          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
+	          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
+	      {% endif %}
+	    </div>
+		{% endfor %}
+		{% else %}
+			<p> Nothing to display. </p>
+		{% endif %}
+		{% if org%}
+			<a class="btn btn-outline-success" align="center" href="{% url 'event-create' %}">Add Event</a>
+		{% endif %}
+	</div> 
+    <!-- <div class="leftColumn" id='calendar'></div> -->
+    <div class="rightColumn">
+      <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
+      {% if announcements %}
+        {% for announcement in announcements %} 
+          <ul class="list-group">
+            <li class="list-group-item-light ml-4">
+              <h5>{{ announcement.event }}</h5>
+              <!-- <h6>{{ announcement.date_posted }} </h6> -->
+            </li>
+            <li class="list-group-item-light shortenlines ml-4">
+              <p> {{ announcement.body }} </p>
+              <!-- <p class="font-weight-light"> {{ announcement.body }} </p> -->
+            </li>
+            <li align="center">
+              {% if org and id == announcement.author.pk %}
+                  <a class="btn btn-custom mt-2 mr-3" href="{% url 'announcement-update' announcement.id%}"><b>Edit</b></a>
+                  <a class="btn btn-custom mt-2" href="{% url 'announcement-delete' announcement.id%}"><b>Delete</b></a>
+              {% endif %}
+            </li>
+          </ul>
+        {% endfor %}    
+      {% else %}
+        <p> No announcements this week. </p>
+      {% endif %}
+      {% if org%}
+        <svg-icon><src href="{% static 'add.svg' %}" /></svg-icon>
+        <a class="btn btn-outline-success" align="center" href="{% url 'announcement-create' %}">New</a>  
+      {% endif %}
+      <a class="btn btn-outline-success" align="center" href="{% url 'announcement-view' %}">View All</a>
+    </div>
+  </div> 
+</body>
+</html>
