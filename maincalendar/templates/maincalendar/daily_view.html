@@ -1,0 +1,18 @@
+<!-- This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016 -->
+<!-- 
+	02/21/19
+	Christel Anne Espino
+		Created the template
+ -->
+{% extends "maincalendar/index.html" %}
+{% block content %}
+
+{% for event in event_list %}
+	<h3> {{ event.title }}</h3>
+	<h5> {{ event.description }} </h5>
+	<div class="container mb-4">
+		<a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
+	</div>
+
+{% endfor %}			  
+{% endblock content %}

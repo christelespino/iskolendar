@@ -1,0 +1,89 @@
+<!--This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
+
+<!-- 
+	02/08/19
+	Allure Tanquintic
+		modified display layout
+ -->
+<!--
+	02/17/19
+	Patrick Joseph Sanchez
+		added condition in displaying the edit and delete buttons
+-->
+<!--
+	02/21/19
+	Christel Anne Espino
+		added get request for daily view
+-->
+<!--
+	03/08/19
+	Christel Anne Espino
+		added announcements sidebar
+-->
+{% extends "maincalendar/index.html" %}
+{% block content %}
+
+
+<!-- <div class="panel panel-default">
+<div class="panel-body"> -->
+<div class="container-fluid">
+<div class="row">	
+<div class="col-5 bg-light">	
+<div class="wrap"> 
+	<aside>
+		<h6>{{ date }}</h6>
+            <h4>Announcements</h4>
+            {% if announcements %}
+            {% for announcement in announcements %}	
+	            <ul class="list-group">
+					<li class="list-group-item list-group-item-light">
+						<h6>{{ announcement.event }}</h6><br>
+						<p class="font-weight-light">{{ announcement.body }}</p>
+						{% if org and id == announcement.author.pk %}
+				          <a class="btn btn-default" href="{% url 'announcement-update' announcement.id%}">Edit</a>
+				          <a class="btn btn-default" href="{% url 'announcement-delete' announcement.id%}">Delete</a>
+				      	{% endif %}
+					</li>
+		        </ul>
+		    {% endfor %}    
+           	{% else %}
+           		<p> No announcements this week. </p>
+           	{% endif %}
+           	{% if org%}
+           		<a class="btn btn-outline-success" align="center" href="{% url 'announcement-create' %}">New</a>	
+           	{% endif %}
+           	<a class="btn btn-outline-success" align="center" href="{% url 'announcement-view' %}">View All</a>
+	</aside>
+</div>
+</div> 
+    
+		<div class="col offset-1" id="main">
+            {% if events %}
+			{% for event in events %}
+			<h3> {{ event.title }}</h3>
+			<h6><form action="{% url 'daily-view' %}" method="GET">
+				<input type="hidden" value="{{ event.date_start }}" name="date" id="date">
+				<input type="submit" value="{{ event.date_start }}">  
+			</form></h6>
+			<h5> {{ event.description }} </h5>
+			<div class="container mb-4">
+			  <a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
+			  {% if org and id == event.author.pk %}
+		          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
+		          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
+		      {% endif %}
+	        </div>
+			{% endfor %}
+			{% else %}
+				<p> Nothing to display. </p>
+			{% endif %}
+			{% if org%}
+			<div class="col-lg-12 mb-4" align="center">
+				<a class="btn btn-outline-success" align="center" href="{% url 'event-create' %}">Add Event</a>
+			</div>
+			{% endif %}
+        </div> 
+</div>
+</div>
+
+{% endblock content %}

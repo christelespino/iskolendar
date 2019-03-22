@@ -1,0 +1,57 @@
+/*This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016*/
+
+/* 02/08/19
+  Allure Tanquintic
+    created the file.
+    no edits yet.
+
+  03/08/19
+  Christel Espino
+    added sticky sidebar  
+*/
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+.navbar {
+  background-color: #8f1838;
+  text-align: center;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.btn-success{
+  background-color: #005740;
+}
+
+.sticky-sidebar {
+  transition: all .3s ease-out;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.wrap {
+  height: 100vh;
+  display: flex;
+}
+
+aside {
+  flex: 1;
+  overflow-y: scroll;
+  height: 100vh;
+  position: fixed;
+}

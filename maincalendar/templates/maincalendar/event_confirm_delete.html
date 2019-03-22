@@ -1,0 +1,24 @@
+<!--This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
+
+<!-- 02/08/19
+Allure Tanquintic
+	added crispy form layout
+	added buttons
+ -->
+{% extends "maincalendar/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class = "content-section">
+		<form method = "POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Delete Event</legend>
+				<h2>Are you sure you want to delete the event "{{object}}"?</h2>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+				<a class="btn btn-outline-success" href="{% url 'event-detail' object.id%}">Cancel</a>
+			</div>
+		</form>
+	</div>
+{% endblock content %}
