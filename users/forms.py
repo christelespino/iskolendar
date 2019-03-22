@@ -53,7 +53,8 @@ class UserRegisterForm(UserCreationForm):
 		("9", "Mechanical Engineering"),
 		("10", "Mining Engineering"),
 		("11", "Metallurgical Engineering"),
-		("12", "Materials Engineering")
+		("12", "Materials Engineering"),
+		("13", "Biology")
 	]
 	
 	student_number = forms.CharField(max_length = 9, widget=TextInput(attrs={'type':'number', 'placeholder': '20xxxxxxx'}))

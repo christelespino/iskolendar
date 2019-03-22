@@ -75,13 +75,17 @@ def announcements_view(request):
 	return render(request, 'maincalendar/announcement_view.html', {'announcement_list': Announcement.objects.all().order_by('date_posted')})
 
 def addparticipant(request):
+	engg = ["Chemical Engineering", "Civil Engineering", "Computer Science", "Computer Engineering", 
+	"Electrical Engineering", "Electronics Engineering", "Geodetic Engineering", "Industrial Engineering",
+	"Mechanical Engineering", "Mining Engineering", "Metallurgical Engineering", "Materials Engineering"]
+
 	event_add = Event.objects.filter(pk=request.GET.get('event')).first()
 	num = event_add.limit
-	userprof = Profile.objects.filter(user = request.user)[0]
+	userprof = Profile.objects.filter(user = request.user).first()
 
 	if num == event_add.participants.all().count():
 		messages.error(request, 'Event has reached its limit.')
-	elif event_add.deg_prog != "N/A" and event_add.deg_prog != userprof.degree_program:
+	elif (event_add.deg_prog != "N/A" and event_add.deg_prog != userprof.degree_program) or (event_add.college == "College of Engineering" and userprof.degree_program not in engg):
 		messages.error(request, 'Degree program not part of the scope.')
 	else:	
 		event_add.participants.add(request.user)
@@ -121,14 +125,14 @@ class EventDetailView(DetailView):
 
 class EventCreateView(LoginRequiredMixin, CreateView):
 	model = Event
-	fields = ['title', 'description', 'date_start', 'date_end', 'time_start', 'time_end', 'event_type', 'venue', 'deg_prog', 'limit']
+	fields = ['title', 'description', 'date_start', 'date_end', 'time_start', 'time_end', 'event_type', 'venue', 'deg_prog', 'college', 'limit']
 	def form_valid(self, form):
 		form.instance.author = self.request.user
 		return super().form_valid(form)
 
 class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Event
-	fields = ['title', 'description', 'date_start', 'date_end', 'time_start', 'time_end', 'event_type', 'venue', 'scope', 'limit']
+	fields = ['title', 'description', 'date_start', 'date_end', 'time_start', 'time_end', 'event_type', 'venue', 'deg_prog', 'college', 'limit']
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user
