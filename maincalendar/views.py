@@ -40,6 +40,7 @@ from .models import Event, Announcement
 from users.models import Profile
 from .announcement_form import AnnouncementForm
 import datetime
+import json
 
 
 context = {
@@ -52,15 +53,26 @@ context = {
 
 # @login_required
 def maincalendar(request):
+	data = []
 	curr_date = datetime.date.today()
 	start_week = curr_date - datetime.timedelta(curr_date.weekday())
 	end_week = start_week + datetime.timedelta(7)
+
+	events = Event.objects.all()
+	for event in events:
+		data.append({
+			'title': event.title,
+			'start': event.date_start.strftime('%Y-%m-%d'),
+			'end': event.date_end.strftime('%Y-%m-%d'),
+		})
 	context = {
 		'events' : Event.objects.all().order_by('date_start'),
 		'org' : request.user.is_staff,
 		'announcements' : Announcement.objects.filter(date_posted__range=[start_week, end_week]),
 		'id'  : request.user.pk,
 		'date' : datetime.date.today(),
+		'data' : data,
+
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
 
