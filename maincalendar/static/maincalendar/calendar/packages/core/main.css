@@ -501,7 +501,7 @@ TODO: more distinction between this file and common.css
   background: #eee; }
 
 .fc-unthemed td.fc-today {
-  background: #c0d8a9; }
+  background: #d9d9db; }
 
 .fc-unthemed .fc-disabled-day {
   background: #d7d7d7;
@@ -539,7 +539,7 @@ from https://feathericons.com/ and built with IcoMoon
   content: "\e902"; }
 
 .fc-icon-chevrons-right:before {
-  content: "\e903"; }
+  content: "\e903"; }=
 
 .fc-icon-minus-square:before {
   content: "\e904"; }

@@ -115,6 +115,8 @@ p{
   top: 32em; 
   right: 0.15em; 
   position: absolute;
+  position: -webkit-sticky;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .rightbottomColumn{
@@ -129,6 +131,7 @@ p{
 }
 
 img.imgshadow{
+  position: sticky;
   position: -webkit-sticky;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
