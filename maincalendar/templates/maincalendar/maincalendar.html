@@ -155,39 +155,79 @@
 		{% endif %}
 	</div>  -->
       <div class="leftColumn" id='calendar'></div>
-      {% if org%}
-        <a class="btn btn-outline-success" align="center" href="{% url 'event-create' %}">Add Event</a>
-      {% endif %}
-    <div class="rightColumn">
-      <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
-      {% if announcements %}
-        {% for announcement in announcements %} 
-          <ul class="list-group">
-            <li class="list-group-item-light ml-4">
-              <h5>{{ announcement.event }}</h5>
-              <!-- <h6>{{ announcement.date_posted }} </h6> -->
-            </li>
-            <li class="list-group-item-light shortenlines ml-4">
-              <p> {{ announcement.body }} </p>
-              <!-- <p class="font-weight-light"> {{ announcement.body }} </p> -->
-            </li>
-            <li align="center">
-              {% if org and id == announcement.author.pk %}
-                  <a class="btn btn-custom mt-2 mr-3" href="{% url 'announcement-update' announcement.id%}"><b>Edit</b></a>
-                  <a class="btn btn-custom mt-2" href="{% url 'announcement-delete' announcement.id%}"><b>Delete</b></a>
-              {% endif %}
-            </li>
-          </ul>
-        {% endfor %}    
-      {% else %}
-        <p> No announcements this week. </p>
-      {% endif %}
-      {% if org%}
-        <svg-icon><src href="{% static 'add.svg' %}" /></svg-icon>
-        <a class="btn btn-outline-success" align="center" href="{% url 'announcement-create' %}">New</a>  
-      {% endif %}
-      <a class="btn btn-outline-success" align="center" href="{% url 'announcement-view' %}">View All</a>
     </div>
+
+    <!-- SECTION LABELS -->
+    <a class="announcementHeader" href="{% url 'announcement-view' %}">
+      <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
+    </a>
+    <img class="eventsHeader imgshadow" src="{% static 'maincalendar/events.png' %}">
+
+    <div class="scroll">
+      <div class="righttopColumn">
+        <div class="announcementslist">
+          {% if announcements %}
+            {% for announcement in announcements %} 
+              <ul class="list-group">
+                <li class="list-group-item-light ml-4 shortenlines">
+                  <h5>{{ announcement.event }}</h5>
+                  <!-- <h6>{{ announcement.date_posted }} </h6> -->
+                </li>
+                <li class="list-group-item-light ml-4 shortenlines">
+                  <p> {{ announcement.body }} </p>
+                </li>
+                <li align="center">
+                  {% if org and id == announcement.author.pk %}
+                      <a class="btn btn-custom mt-2 mr-3" href="{% url 'announcement-update' announcement.id%}"><b>Edit</b></a>
+                      <a class="btn btn-custom mt-2" href="{% url 'announcement-delete' announcement.id%}"><b>Delete</b></a>
+                  {% endif %}
+                </li>
+              </ul>
+            {% endfor %}    
+          {% else %}
+            <p> No announcements this week. </p>
+          {% endif %}
+        </div>
+      </div>
+      {% if org%}
+        <a class="addbutton announcement" href="{% url 'announcement-create' %}">
+          <img src="{% static 'maincalendar/add.png' %}"/>
+        </a>
+      {% endif %}
+
+      <div class="rightbottomColumn">
+        {% if events %}
+          {% for event in events %}
+            <ul class="list-group">
+              <li class="list-group-item-light ml-4">
+                <h5> {{ event.title }}</h5>
+                <!-- <h6><form action="{% url 'daily-view' %}" method="GET">
+                  <input type="hidden" value="{{ event.date_start }}" name="date" id="date">
+                  <input type="submit" value="{{ event.date_start }}">  
+                </form></h6> -->
+              </li>
+              <li class="list-group-item-light ml-4">
+                <p> {{ event.description }} </p>
+              </li>
+              <li align="center">
+                <!-- <a class="btn btn-custom mt-2" href="{% url 'event-detail' event.id%}">Details</a> -->
+                {% if org and id == event.author.pk %}
+                      <a class="btn btn-custom mt-2 mr-2 ml-2" href="{% url 'event-update' event.id%}"><b>Edit</b></a>
+                      <a class="btn btn-custom mt-2" href="{% url 'event-delete' event.id%}"><b>Delete</b></a>
+                {% endif %}
+              </li>
+            </ul>
+          {% endfor %}
+        {% else %}
+          <p> Nothing to display. </p>
+        {% endif %}
+      </div> 
+    </div>
+    {% if org%}
+      <a class="addbutton event" href="{% url 'event-create' %}">
+        <img src="{% static 'maincalendar/add.png' %}"/>
+      </a>
+    {% endif %}
   </div> 
 </body>
 </html>

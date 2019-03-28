@@ -76,14 +76,6 @@ p{
 }
 
 .shortenlines {
-  /*overflow: hidden;
-  position: relative;
-  display: inline-block;
-  margin: 0 5px 0 5px;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;*/
   overflow: hidden; 
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -96,30 +88,108 @@ p{
 
 #calendar {
   max-width: 850px;
-  /*margin: 0 2em 7em 0 auto;*/
 }
 
 .leftColumn{
   margin-left: 2em;
 }
 
-.rightColumn{
-  border: 1px transparent;
-  background-color: #efefef;
-  /*overflow: auto;*/
+.announcementHeader{
+  top: 5em; 
+  right: 0.1em; 
+  position: absolute; 
 }
 
-/* MEDIA QUERIES */
-@media screen and (min-width: 47.5em ) {
-  .leftColumn { margin-right: 0em; }
+.righttopColumn{
+  border: 1px transparent;
+  background-color: #efefef;
+  height: 42%;
+  width: 23.54em;
+  top: 7.95em; 
+  right: 0.15em; 
+  position: absolute; 
+  overflow-y: auto;
+}
 
-  .rightColumn { position: absolute; top: 4.90em; right: 0.15em; width: 23.5em; }   
+.eventsHeader{
+  top: 32em; 
+  right: 0.15em; 
+  position: absolute;
+}
+
+.rightbottomColumn{
+  border: 1px transparent;
+  background-color: #efefef;
+  height: 43%;
+  width: 23.6em;
+  top: 35.1em; 
+  right: 0.15em; 
+  position: absolute;
+  overflow-y: auto;
 }
 
 img.imgshadow{
-  position: sticky;
   position: -webkit-sticky;
-  top: 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  /*text-align: center;*/
+}
+
+img{
+  z-index: 9998
+}
+
+.addbutton {
+    position: absolute;
+    right: 0.15em;
+}
+.announcement{
+  top: 28em;
+}
+.event{
+  top: 55.5em;
+}
+
+/*SCROLL STYLES*/
+/* width */
+.righttopColumn::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.righttopColumn::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.righttopColumn::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+.righttopColumn::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/*BOTTOM PART OF RIGHT COLUMN*/
+.rightbottomColumn::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.rightbottomColumn::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.rightbottomColumn::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+  opacity: 0.2;
+}
+
+/* Handle on hover */
+.rightbottomColumn::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
