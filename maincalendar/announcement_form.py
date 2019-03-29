@@ -12,7 +12,7 @@ from .models import Event, Announcement
 class AnnouncementForm(forms.ModelForm):
 	class Meta:
 		model = Announcement
-		fields = ['event', 'body']
+		fields = ['event', 'subject', 'body']
 
 	def __init__(self, *args, **kwargs):
 		user = kwargs.pop('user')

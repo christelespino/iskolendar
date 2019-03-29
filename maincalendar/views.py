@@ -183,7 +183,7 @@ class AnnouncementCreateView(LoginRequiredMixin, CreateView):
 
 class AnnouncementUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Announcement
-	fields = ['body']
+	fields = ['subject','body']
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user

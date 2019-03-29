@@ -26,7 +26,8 @@ Allure Tanquintic
 		<p> end: {{ object.date_end}}	time: {{ object.time_end }} </p>
 		<p> event type: {{ object.event_type }} </p>
 		<p> venue: {{ object.venue }} </p>
-		<p> scope: {{ object.scope }} </p>
+		<p> degree program restriction: {{ object.deg_prog }} </p>
+		<p> college restriction: {{ object.college }} </p>
 		<p> limit: {{ object.limit }} </p>
 		<p> participants:<br>
 			{% for s in object.participants.all%}
@@ -37,9 +38,6 @@ Allure Tanquintic
 			{%endfor%}
 		</p>
 	</h4>
-	<div class="col-lg-12 mt-4">
-      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
-    </div>
 
     {%if request.user.is_authenticated%}
     	{% if user_joined%}
@@ -56,4 +54,8 @@ Allure Tanquintic
 			</form>
 		{% endif %}
     {%endif%}
+
+    <div class="col-lg-12 mt-4">
+      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
+    </div>
 {% endblock content %}

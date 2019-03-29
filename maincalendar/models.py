@@ -94,6 +94,7 @@ class Event(models.Model):
 
 class Announcement(models.Model):
 	date_posted = models.DateTimeField(default = timezone.now)
+	subject = models.CharField(max_length = 500, default=None, blank=True, null=True)
 	body = models.TextField()
 	event = models.ForeignKey(Event, default = None, on_delete = models.CASCADE)
 	author = models.ForeignKey(User, default = None, on_delete = models.CASCADE)
