@@ -44,13 +44,23 @@ Allure Tanquintic
 		    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
 				<input type="hidden" value="{{ object.id }}" name="event" id="event">
 				<input type="submit" value="Unjoin">
-				<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
 			</form>
 		{% else %}
 			<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
 				<input type="hidden" value="{{ object.id }}" name="event" id="event">
 				<input type="submit" value="Join">
-				<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+			</form>
+		{% endif %}
+
+		{% if user_bookmarked%}
+		    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
+				<input type="hidden" value="{{ object.id }}" name="event" id="event">
+				<input type="submit" value="Remove bookmark">
+			</form>
+		{% else %}
+			<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
+				<input type="hidden" value="{{ object.id }}" name="event" id="event">
+				<input type="submit" value="Bookmark">
 			</form>
 		{% endif %}
     {%endif%}

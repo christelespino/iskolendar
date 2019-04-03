@@ -2,13 +2,14 @@
 <!-- 
 	03/21/19
 	Christel Anne Espino
-		Created the template
+		Created the template 
  -->
 {% extends "maincalendar/index.html" %}
 {% block content %}
 
 {% if logged %}
 	{% if events %}
+		<h2> Events joined:</h2>
 		{% for event in events %}
 			<h3> {{ event.title }}</h3>
 			<h5> {{ event.date_start }}</h5>
@@ -19,6 +20,20 @@
 		{% endfor %}
 	{% else %}
 		<h3> You have not joined any events. </h3>
+	{% endif %}
+
+	{% if bm_events %}
+		<h2> Events bookmarked:</h2>
+		{% for event in bm_events %}
+			<h3> {{ event.title }}</h3>
+			<h5> {{ event.date_start }}</h5>
+			<h5> {{ event.description }} </h5>
+			<div class="container mb-4">
+				<a class="btn btn-success active mr-3" href="{% url 'event-detail' event.id%}">Details</a>
+			</div>
+		{% endfor %}
+	{% else %}
+		<h3> You have not bookmarked any events. </h3>
 	{% endif %}
 
 {% else %}

@@ -55,6 +55,10 @@
         			{{ form.org_acronym.label_tag }} {{ form.org_acronym }}
         			<p class="help"> Enter N/A if not applicable. </p>
         			</div>
+                    <div class="fieldWrapper">
+                    {{ form.college.errors }}
+                    {{ form.college.label_tag }} {{ form.college }}
+                    </div>
         			<div class="fieldWrapper">
         			{{ form.degree_program.errors }}
         			{{ form.degree_program.label_tag }} {{ form.degree_program }}
