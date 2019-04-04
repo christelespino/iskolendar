@@ -24,15 +24,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 EVENT_TYPE = (
-	('seminar', 'SEMINAR'),
-	('workshop', 'WORKSHOP'),
-	('convention', 'CONVENTION'),
-	('review session', 'REVIEW SESSION'),
-	('applicants\' orientation', 'APPLICANTS\' ORIENTATION'),
-	('competition', 'COMPETITION'),
-	('outreach', 'OUTREACH'),
-	('fundraising', 'FUNDRAISING'),
-	('others', 'OTHERS'),
+	('Seminar', 'SEMINAR'),
+	('Workshop', 'WORKSHOP'),
+	('Convention', 'CONVENTION'),
+	('Review Session', 'REVIEW SESSION'),
+	('Applicants\' Orientation', 'APPLICANTS\' ORIENTATION'),
+	('Competition', 'COMPETITION'),
+	('Outreach', 'OUTREACH'),
+	('Fundraising', 'FUNDRAISING'),
+	('Others', 'OTHERS'),
 )
 '''
 SCOPE_CHOICES = (
@@ -44,18 +44,18 @@ SCOPE_CHOICES = (
 '''
 
 DEG_CHOICES = (
-		("1", "Chemical Engineering"),
-		("2", "Civil Engineering"),
-		("3", "Computer Science"),
-		("4", "Computer Engineering"),
-		("5", "Electrical Engineering"),
-		("6", "Electronics Engineering"),
-		("7", "Geodetic Engineering"),
-		("8", "Industrial Engineering"),
-		("9", "Mechanical Engineering"),
-		("10", "Mining Engineering"),
-		("11", "Metallurgical Engineering"),
-		("12", "Materials Engineering")
+		("Chemical Engineering", "Chemical Engineering"),
+		("Civil Engineering", "Civil Engineering"),
+		("Computer Science", "Computer Science"),
+		("Computer Engineering", "Computer Engineering"),
+		("Electrical Engineering", "Electrical Engineering"),
+		("Electronics Engineering", "Electronics Engineering"),
+		("Geodetic Engineering", "Geodetic Engineering"),
+		("Industrial Engineering", "Industrial Engineering"),
+		("Mechanical Engineering", "Mechanical Engineering"),
+		("Mining Engineering", "Mining Engineering"),
+		("Metallurgical Engineering", "Metallurgical Engineering"),
+		("Materials Engineering", "Materials Engineering")
 )
 
 COLLEGE_CHOICES = (

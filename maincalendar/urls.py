@@ -25,6 +25,7 @@ Christel Anne Espino
 from django.urls import path, include
 from django.conf.urls import url
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .views import EventDetailView, EventCreateView, EventUpdateView, EventDeleteView
 from .views import AnnouncementCreateView, AnnouncementUpdateView, AnnouncementDeleteView
@@ -42,6 +43,9 @@ urlpatterns = [
     path('', views.maincalendar, name = 'maincalendar'),
     path('add_participant/', views.addparticipant, name = 'addparticipant'),
     path('remove_participant/', views.removeparticipant, name = 'removeparticipant'),
+    
+    path('add_bookmark/', login_required(views.addbookmark), name = 'addbookmark'),
+    path('remove_bookmark/', login_required(views.removebookmark), name = 'removebookmark'),
     
     path('announcement/new/', staff_member_required(AnnouncementCreateView.as_view()), name='announcement-create'),
     path('announcement/<int:pk>/update', AnnouncementUpdateView.as_view(), name='announcement-update'),

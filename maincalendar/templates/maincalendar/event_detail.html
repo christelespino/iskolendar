@@ -14,58 +14,126 @@ Allure Tanquintic
 		Fixed join event    	
  -->
 
-{% extends "maincalendar/index.html" %}
 {% load crispy_forms_tags %}
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-	<h4>
-		<p> {{ object.title }}</p>
-		<p> posted on {{ object.date_posted }}</p>
-		<p> {{ object.description }}</p>
-		<p> start: {{ object.date_start }}	time: {{ object.time_start }} </p>
-		<p> end: {{ object.date_end}}	time: {{ object.time_end }} </p>
-		<p> event type: {{ object.event_type }} </p>
-		<p> venue: {{ object.venue }} </p>
-		<p> degree program restriction: {{ object.deg_prog }} </p>
-		<p> college restriction: {{ object.college }} </p>
-		<p> limit: {{ object.limit }} </p>
-		<p> participants:<br>
-			{% for s in object.participants.all%}
-				{% if s.name %}
-					Hello
-				{% endif %}	
-				{{s.username}}<br>
-			{%endfor%}
-		</p>
-	</h4>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {%if request.user.is_authenticated%}
-    	{% if user_joined%}
-		    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Unjoin">
-			</form>
-		{% else %}
-			<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Join">
-			</form>
-		{% endif %}
+    <title>Iskolendar</title>
 
-		{% if user_bookmarked%}
-		    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Remove bookmark">
-			</form>
-		{% else %}
-			<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Bookmark">
-			</form>
-		{% endif %}
-    {%endif%}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-    <div class="col-lg-12 mt-4">
-      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
-    </div>
-{% endblock content %}
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'maincalendar/main.css' %}">
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'maincalendar' %}">
+            <img src="{% static 'maincalendar/iskolendar-logo.png' %}" width="135" height="44.25"/></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class ="nav-item active">
+                  <a class="nav-link">Main Calendar
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class ="nav-item">
+                  <a class="nav-link" href="{% url 'personal-calendar' %}">My Calendar</a>
+                </li>
+                <li class ="nav-item">
+                  <a class="nav-link">Settings</a>
+                </li>
+                <li class ="nav-item">
+                  {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                  {% else %}
+                      <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                    </li>
+                    <li class ="nav-item">
+                      <a class="nav-link" href="{% url 'register' %}">Register</a>
+                  {% endif %}
+                </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <body>
+    	<div class="container">
+    	<div class="card">
+    		<h3><div class="card-header text-white" style="background-color: #005740;">{{ object.title }}</div></h3>
+  			<div class="card-body">
+  				<h6>Hosted By: </h6>
+				<hr size="20">
+				<h4>
+					<p> {{ object.event_type }} </p>
+					<p> Date: {{ object.date_start }} to {{ object.date_end}}</p>
+					{% if object.time_start %}
+					<p> Time: {{ object.time_start }} {% if object.time_end %} to  {{ object.time_end }} {% endif %}</p>
+					{% endif %}
+					<p> Venue: {{ object.venue }} </p>
+					<p> Degree Program Restriction: {{ object.deg_prog }} </p>
+					<p> College Restriction: {{ object.college }} </p>
+					<p> {{ object.description }}</p>
+					
+					<p> Limit: {{ object.limit }} </p>
+					<p> Participants:<br>
+						{% for s in object.participants.all%}
+							{% if s.name %}
+								Hello
+							{% endif %}	
+							{{s.username}}<br>
+						{%endfor%}
+					</p>
+				</h4>
+
+			    {%if request.user.is_authenticated%}
+			    	{% if user_joined%}
+					    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Unjoin">
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Join">
+						</form>
+					{% endif %}
+
+					{% if user_bookmarked%}
+					    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Remove bookmark">
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Bookmark">
+						</form>
+					{% endif %}
+			    {%endif%}
+
+			    <div class="col-lg-12 mt-4">
+			      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
+			    </div>	
+  			</div>
+    	</div>	
+		</div>
+    </body>
