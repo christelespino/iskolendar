@@ -78,7 +78,7 @@ Allure Tanquintic
     <body>
     	<div class="container">
     	<div class="card">
-    		<h3><div class="card-header text-white" style="background-color: #005740;">{{ object.title }}</div></h3>
+    		<h4><div class="card-header text-white" style="background-color: #005740;">{{ object.title }}</div></h4>
   			<div class="card-body">
   				<h6>Hosted By: </h6>
 				<hr size="20">
@@ -91,18 +91,22 @@ Allure Tanquintic
 					<p> Venue: {{ object.venue }} </p>
 					<p> Degree Program Restriction: {{ object.deg_prog }} </p>
 					<p> College Restriction: {{ object.college }} </p>
-					<p> {{ object.description }}</p>
-					
 					<p> Limit: {{ object.limit }} </p>
-					<p> Participants:<br>
+				</h4><br>	
+				<h6>About the Event: </h6>
+				<hr size="20">
+					<h4><p> {{ object.description }}</p></h4>
+				<br>
+				<h6>Participants:</h6>
+				<h4><p><br>
 						{% for s in object.participants.all%}
 							{% if s.name %}
 								Hello
 							{% endif %}	
 							{{s.username}}<br>
 						{%endfor%}
-					</p>
-				</h4>
+				</p></h4>
+				
 
 			    {%if request.user.is_authenticated%}
 			    	{% if user_joined%}
