@@ -9,7 +9,8 @@
 
 {% for announcement in announcement_list %}
 	<h6> {{ announcement.date_posted }} </h6>
-	<h3> {{ announcement.event }} </h3>
+	<h3> {{ announcement.subject }} </h3>
+	<h5> {{ announcement.event }} </h5>
 	<h6> {{ announcement.body }} </h6>
 
 {% endfor %}			  

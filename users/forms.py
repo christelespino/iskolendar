@@ -54,18 +54,24 @@ class UserRegisterForm(UserCreationForm):
 		("10", "Mining Engineering"),
 		("11", "Metallurgical Engineering"),
 		("12", "Materials Engineering"),
-		("13", "Biology")
+		("13", "Biology"),
 	]
-	
+	 
+	COLLEGE_CHOICES = (
+		("1", "College of Engineering"),
+		("2", "College of Science"),
+	)
+	 
 	student_number = forms.CharField(max_length = 9, widget=TextInput(attrs={'type':'number', 'placeholder': '20xxxxxxx'}))
 	name = forms.CharField(max_length=50)
 	position = forms.CharField(max_length=100, required=False)
 	organization = forms.CharField(max_length=100, required=False)
 	org_acronym = forms.CharField(max_length=20, required=False)
+	college = forms.ChoiceField(choices=COLLEGE_CHOICES, label="College")
 	degree_program = forms.ChoiceField(choices=degprogram, label="Degree Program")
 	email = forms.EmailField()
 
 	class Meta:
 		model = User
-		fields = ['student_number', 'username', 'password1', 'password2', 'name', 'position', 'organization', 'org_acronym', 'degree_program', 'email', 'is_staff']	
+		fields = ['student_number', 'username', 'password1', 'password2', 'name', 'position', 'organization', 'org_acronym', 'college', 'degree_program', 'email', 'is_staff']	
 		

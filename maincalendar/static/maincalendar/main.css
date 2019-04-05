@@ -268,3 +268,14 @@ hr{
   color:#fff;
   padding: 4px 15px;
 }
+
+/*fix*/
+ul.list-participants{
+  list-style: none;
+}
+
+.participants-area{
+  background-color: #efefef;
+  height: 15em;
+  width: 30em;
+}

@@ -27,7 +27,10 @@
 03/21/2019
 	Christel Anne Espino
 		added personal_calendar function  
-		added error message for addparticipant  	
+		added error message for addparticipant
+03/27/2019
+	Patrick Joseph Sanchez
+    	added addbookmark and removebookmark function		  	
 '''
 
 from django.shortcuts import render, redirect
@@ -88,37 +91,61 @@ def announcements_view(request):
 	return render(request, 'maincalendar/announcement_view.html', {'announcement_list': Announcement.objects.all().order_by('date_posted')})
 
 def addparticipant(request):
-	engg = ["Chemical Engineering", "Civil Engineering", "Computer Science", "Computer Engineering", 
-	"Electrical Engineering", "Electronics Engineering", "Geodetic Engineering", "Industrial Engineering",
-	"Mechanical Engineering", "Mining Engineering", "Metallurgical Engineering", "Materials Engineering"]
+	if request.GET.get('event') != None:
+		event_add = Event.objects.filter(pk=request.GET.get('event')).first()
+		num = event_add.limit
+		userprof = Profile.objects.filter(user = request.user).first()
 
-	event_add = Event.objects.filter(pk=request.GET.get('event')).first()
-	num = event_add.limit
-	userprof = Profile.objects.filter(user = request.user).first()
+		if num == event_add.participants.all().count():
+			messages.error(request, 'Event has reached its limit.')
+		elif (event_add.college != None and event_add.college != userprof.college) or (event_add.deg_prog != None and event_add.deg_prog != userprof.degree_program):
+			messages.error(request, 'Degree program not part of the scope.')
+		else:	
+			event_add.participants.add(request.user)
 
-	if num == event_add.participants.all().count():
-		messages.error(request, 'Event has reached its limit.')
-	elif (event_add.deg_prog != "N/A" and event_add.deg_prog != userprof.degree_program) or (event_add.college == "College of Engineering" and userprof.degree_program not in engg):
-		messages.error(request, 'Degree program not part of the scope.')
-	else:	
-		event_add.participants.add(request.user)
-
-	return redirect('event-detail', pk = request.GET.get('event'))
+		return redirect('event-detail', pk = request.GET.get('event'))
+	else:
+		return redirect('maincalendar')
 
 def removeparticipant(request):
-	event_remove = Event.objects.filter(pk=request.GET.get('event')).first()
-	event_remove.participants.remove(request.user)
-	return redirect('event-detail', pk = request.GET.get('event'))
+	if request.GET.get('event') != None:
+		event_remove = Event.objects.filter(pk=request.GET.get('event')).first()
+		event_remove.participants.remove(request.user)
+		return redirect('event-detail', pk = request.GET.get('event'))
+	else:
+		return redirect('maincalendar')
+
+def addbookmark(request):
+	if request.GET.get('event') != None:
+		event_add = Event.objects.filter(pk=request.GET.get('event')).first()
+		userprof = Profile.objects.filter(user = request.user).first()
+		userprof.bookmarks.add(event_add)
+
+		return redirect('event-detail', pk = request.GET.get('event'))
+	else:
+		return redirect('maincalendar')
+
+def removebookmark(request):
+	if request.GET.get('event') != None:
+		event_remove = Event.objects.filter(pk=request.GET.get('event')).first()
+		userprof = Profile.objects.filter(user = request.user).first()
+		userprof.bookmarks.remove(event_remove)
+		return redirect('event-detail', pk = request.GET.get('event'))	
+	else:
+		return redirect('maincalendar')		
 
 def personal_calendar(request):
+	userprof = Profile.objects.filter(user = request.user).first()
 	if request.user.is_authenticated:
 		context = {
 			'data' : request.user.events_joined.all().order_by('date_start'),
+			'bm_events': userprof.bookmarks.all().order_by('date_start'),
 			'logged' : request.user.is_authenticated
 		}
 	else:
 		context = {
 			'data' : None,
+			'bm_events': None,
 			'logged' : request.user.is_authenticated
 		}	
 	return render(request, 'maincalendar/personal_calendar.html', context)
@@ -128,6 +155,15 @@ class EventDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+
+		userprof = Profile.objects.filter(user = self.request.user).first()
+
+		context['user_bookmarked'] = False
+		for s in userprof.bookmarks.all():
+			if s == context['object']:
+				context['user_bookmarked'] = True
+				break
+
 		context['user_joined'] = False
 
 		for s in context['object'].participants.all():
@@ -184,7 +220,7 @@ class AnnouncementCreateView(LoginRequiredMixin, CreateView):
 
 class AnnouncementUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Announcement
-	fields = ['body']
+	fields = ['subject','body']
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user

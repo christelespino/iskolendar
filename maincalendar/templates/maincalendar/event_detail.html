@@ -57,10 +57,19 @@ Allure Tanquintic
 				</span>
 			</p>
 			{% endif %}
-			<p style="color: #008080; margin-left: 5px;">Scope: 
+			<p style="color: #008080; margin-left: 5px;">Degree Program Restriction: 
 				<span style="color: #000">
-					{% if object.scope %}
-						{{ object.scope }}
+					{% if object.deg_prog %}
+						{{ object.deg_prog }}
+					{% else %}
+						None
+					{% endif %}
+				</span>
+			</p>
+			<p style="color: #008080; margin-left: 5px;">College Restriction: 
+				<span style="color: #000">
+					{% if object.college %}
+						{{ object.college }}
 					{% else %}
 						None
 					{% endif %}
@@ -72,24 +81,51 @@ Allure Tanquintic
 		</div>
 
 		<div class="rightColumn-eventDetail">
-			<h4>hello</h4>
+			{% if messages %}
+	            {% for message in messages %}
+	              <div class="alert alert-{{ message.tags }} mt-4">
+	                {{ message }}
+	              </div>
+	            {% endfor %}
+	        {% endif %}
+			<span class = "about"><b>Participants</b></span>
+			{% for s in object.participants.all %}
+				<ul class="list-participants">
+	              	<li class="list-participants ml-4">
+						<p>{{s.username}}</p>
+					</li>
+				</ul>
+			{% endfor %}
+
 			 {%if request.user.is_authenticated%}
-		    	{% if user_joined%}
-				    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
-						<input type="hidden" value="{{ object.id }}" name="event" id="event">
-						<input type="submit" value="Unjoin">
-						<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
-					</form>
-				{% else %}
-					<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
-						<input type="hidden" value="{{ object.id }}" name="event" id="event">
-						<input type="submit" value="Join">
-						<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
-					</form>
+			 	{% if not user.is_staff %}
+			    	{% if user_joined%}
+					    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Unjoin">
+							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Join">
+							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+						</form>
+					{% endif %}
+
+					{% if user_bookmarked %}
+					    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Remove bookmark">
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Bookmark">
+						</form>
+					{% endif %}
 				{% endif %}
 		    {%endif%}
 		</div>
-	</div>
-	
-   
+	</div>   
 {% endblock content %}

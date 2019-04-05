@@ -2,10 +2,9 @@
 <!-- 
 	03/21/19
 	Christel Anne Espino
-		Created the template
+		Created the template 
  -->
 <!--This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
-
 <!-- 
 	02/08/19
 	Allure Tanquintic
@@ -29,7 +28,11 @@
 <!--
 	03/22/19
 	Allure Tanquintic
-		fixed layout of announcement and calendar 
+		fixed layout of announcement and calendar
+
+	04/09/2019
+	Allure Tanquintic
+		Updated UI   
  -->
 {% load static %}
 <!DOCTYPE html>
@@ -80,7 +83,15 @@
       },
       eventLimit: true, // allow "more" link when too many events
       events: [                   // get event details 
-        {% for event in data %}
+        // {% for event in data %}
+        // {
+        //   id: "{{ event.id }}",
+        //   title: "{{ event.title }}",
+        //   start: "{{ event.date_start }}",
+        //   end: "{{ event.date_end }}",
+        // },
+        // {% endfor %}
+        {% for event in bm_events %}
         {
           id: "{{ event.id }}",
           title: "{{ event.title }}",
@@ -135,29 +146,6 @@
   </header>
   <div class="columnsContainer">
   	<div class="leftColumn">
-		<!-- {% if events %}
-		{% for event in events %}
-		<h3> {{ event.title }}</h3>
-		<h6><form action="{% url 'daily-view' %}" method="GET">
-			<input type="hidden" value="{{ event.date_start }}" name="date" id="date">
-			<input type="submit" value="{{ event.date_start }}">  
-		</form></h6>
-		<h5> {{ event.description }} </h5>
-		<div class="container mb-4">
-		  <a class="btn btn-success active mr-2" href="{% url 'event-detail' event.id%}">Details</a>
-		  {% if org and id == event.author.pk %}
-	          <a class="btn btn-success active" href="{% url 'event-update' event.id%}">Edit</a>
-	          <a class="btn btn-success active ml-2" href="{% url 'event-delete' event.id%}">Delete</a>
-	      {% endif %}
-	    </div>
-		{% endfor %}
-		{% else %}
-			<p> Nothing to display. </p>
-		{% endif %}
-		{% if org%}
-			<a class="btn btn-outline-success" align="center" href="{% url 'event-create' %}">Add Event</a>
-		{% endif %}
-	</div>  -->
       <div class="leftColumn" id='calendar'></div>
     </div>
 
@@ -175,7 +163,6 @@
               <ul class="list-group">
                 <li class="list-group-item-light ml-4 shortenlines">
                   <h5>{{ announcement.event }}</h5>
-                  <!-- <h6>{{ announcement.date_posted }} </h6> -->
                 </li>
                 <li class="list-group-item-light ml-4 shortenlines">
                   <p> {{ announcement.body }} </p>
@@ -200,8 +187,8 @@
       {% endif %}
 
       <div class="rightbottomColumn">
-        {% if events %}
-          {% for event in events %}
+        {% if bm_events %}
+          {% for event in bm_events %}
             <ul class="list-group">
               <li class="list-group-item-light ml-4">
                 <h5> {{ event.title }}</h5>

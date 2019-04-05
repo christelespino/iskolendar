@@ -7,6 +7,27 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from maincalendar.models import Event
+
+degprogram = [
+	("Chemical Engineering", "Chemical Engineering"),
+	("Civil Engineering", "Civil Engineering"),
+	("Computer Science", "Computer Science"),
+	("Computer Engineering", "Computer Engineering"),
+	("Electrical Engineering", "Electrical Engineering"),
+	("Electronics Engineering", "Electronics Engineering"),
+	("Geodetic Engineering", "Geodetic Engineering"),
+	("Industrial Engineering", "Industrial Engineering"),
+	("Mechanical Engineering", "Mechanical Engineering"),
+	("Mining Engineering", "Mining Engineering"),
+	("Metallurgical Engineering", "Metallurgical Engineering"),
+	("Materials Engineering", "Materials Engineering")
+]
+
+COLLEGE_CHOICES = (
+	("1", "College of Engineering"),
+	("2", "College of Science"),
+)
 
 class Profile(models.Model):
 	student_number = models.CharField(max_length = 100, default="", null = False)
@@ -14,6 +35,7 @@ class Profile(models.Model):
 	position = models.CharField(max_length = 100, default="", null = False)
 	organization = models.CharField(max_length = 100, default="", null = False)
 	org_acronym = models.CharField(max_length = 10, default="", null = False)
+	college = models.CharField(max_length = 100, default="", null = False, choices = COLLEGE_CHOICES)
 	degree_program = models.CharField(max_length = 100, default="", null = False)
 
 	user = models.OneToOneField(
@@ -23,11 +45,13 @@ class Profile(models.Model):
         related_name = "profile",
     )
 
+	bookmarks = models.ManyToManyField(Event, blank=True, related_name = "bookmarked")
+	
 	def __str__(self):
 		return self.name
 	'''
 	def get_absolute_url(self):
 		return reverse('event-detail', kwargs = {'pk': self.pk})
 	'''
-
+ 
 # Create your models here.
