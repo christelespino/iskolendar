@@ -16,44 +16,80 @@ Allure Tanquintic
 
 {% extends "maincalendar/index.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
+	<div class="title-header">
+		<p>
+			<a class="back-button" href="{% url 'maincalendar' %}">
+          		<img src="{% static 'maincalendar/Back_Arrow.png' %}"/>
+          	</a>
+          	<b>{{ object.title }}</b>
+        </p>
+	</div>
 
-	<h4>
-		<p> {{ object.title }}</p>
-		<p> posted on {{ object.date_posted }}</p>
-		<p> {{ object.description }}</p>
-		<p> start: {{ object.date_start }}	time: {{ object.time_start }} </p>
-		<p> end: {{ object.date_end}}	time: {{ object.time_end }} </p>
-		<p> event type: {{ object.event_type }} </p>
-		<p> venue: {{ object.venue }} </p>
-		<p> scope: {{ object.scope }} </p>
-		<p> limit: {{ object.limit }} </p>
-		<p> participants:<br>
-			{% for s in object.participants.all%}
-				{% if s.name %}
-					Hello
-				{% endif %}	
-				{{s.username}}<br>
-			{%endfor%}
-		</p>
-	</h4>
-	<div class="col-lg-12 mt-4">
-      <a class="btn btn-success active" href="{% url 'maincalendar' %}">Back</a>
-    </div>
+	<div class = "pt-2 px-4">
+		<span style = "font-size: 13pt;">Hosted By: {{ object.org }}</span>
+		<hr>
+	</div>
+	<div class="columnsContainer">
+		<div class="leftColumn-eventDetail">
+			<p style="margin-left: 5px;"><span class="dot mr-2"></span>{{ object.event_type }}</p>
+			<p style="color: #008080; margin-left: 5px;">Start: 
+				<span style="color: #000">
+				{{ object.date_start }}
+				{% if object.time_start %}
+					, {{ object.time_start }}
+				{% endif %}
+				</span>
+			</p>
+			<p style="color: #008080; margin-left: 5px;">End: 
+				<span style="color: #000">
+				{{ object.date_end }}
+				{% if object.time_end %}
+					, {{ object.time_end }}
+				{% endif %}
+				</span>
+			</p>
+			{% if object.venue %}
+			<p style="color: #008080;">Venue: 
+				<span style="color: #000">
+					{{ object.venue }}
+				</span>
+			</p>
+			{% endif %}
+			<p style="color: #008080; margin-left: 5px;">Scope: 
+				<span style="color: #000">
+					{% if object.scope %}
+						{{ object.scope }}
+					{% else %}
+						None
+					{% endif %}
+				</span>
+			</p>
+			<span class = "about"><b>ABOUT THE EVENT</b></span>
+			<p class="mt-3 mx-5"> {{object.description}}</p>
+			<!-- <a class="bookmark">  -->
+		</div>
 
-    {%if request.user.is_authenticated%}
-    	{% if user_joined%}
-		    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Unjoin">
-				<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
-			</form>
-		{% else %}
-			<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
-				<input type="hidden" value="{{ object.id }}" name="event" id="event">
-				<input type="submit" value="Join">
-				<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
-			</form>
-		{% endif %}
-    {%endif%}
+		<div class="rightColumn-eventDetail">
+			<h4>hello</h4>
+			 {%if request.user.is_authenticated%}
+		    	{% if user_joined%}
+				    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
+						<input type="hidden" value="{{ object.id }}" name="event" id="event">
+						<input type="submit" value="Unjoin">
+						<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+					</form>
+				{% else %}
+					<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
+						<input type="hidden" value="{{ object.id }}" name="event" id="event">
+						<input type="submit" value="Join">
+						<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+					</form>
+				{% endif %}
+		    {%endif%}
+		</div>
+	</div>
+	
+   
 {% endblock content %}

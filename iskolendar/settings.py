@@ -134,3 +134,4 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'maincalendar'
 LOGIN_URL = 'login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

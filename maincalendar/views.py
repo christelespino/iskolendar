@@ -61,6 +61,7 @@ def maincalendar(request):
 	events = Event.objects.all()
 	for event in events:
 		data.append({
+			'id': event.id,
 			'title': event.title,
 			'start': event.date_start.strftime('%Y-%m-%d'),
 			'end': event.date_end.strftime('%Y-%m-%d'),
@@ -112,12 +113,12 @@ def removeparticipant(request):
 def personal_calendar(request):
 	if request.user.is_authenticated:
 		context = {
-			'events' : request.user.events_joined.all().order_by('date_start'),
+			'data' : request.user.events_joined.all().order_by('date_start'),
 			'logged' : request.user.is_authenticated
 		}
 	else:
 		context = {
-			'events' : None,
+			'data' : None,
 			'logged' : request.user.is_authenticated
 		}	
 	return render(request, 'maincalendar/personal_calendar.html', context)

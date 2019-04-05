@@ -12,6 +12,7 @@ Allure Tanquintic
 	<div class = "content-section">
 		<form method = "POST">
 			{% csrf_token %}
+			{{ form|crispy }}
 			<fieldset class="form-group">
 				<legend class="border-bottom mb-4">Event Post</legend>
 				{{ form.as_p }}
