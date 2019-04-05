@@ -1,0 +1,131 @@
+<!--#This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
+
+<!--
+02/08/19
+Allure Tanquintic
+	added crispy form layout
+	added buttons
+	added the other details to be displayed
+03/20/2019
+	Patrick Joseph Sanchez
+    	added Join Button
+03/21/2019
+	Christel Espino
+		Fixed join event    	
+ -->
+
+{% extends "maincalendar/index.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+	<div class="title-header">
+		<p>
+			<a class="back-button" href="{% url 'maincalendar' %}">
+          		<img src="{% static 'maincalendar/Back_Arrow.png' %}"/>
+          	</a>
+          	<b>{{ object.title }}</b>
+        </p>
+	</div>
+
+	<div class = "pt-2 px-4">
+		<span style = "font-size: 13pt;">Hosted By: {{ object.org }}</span>
+		<hr>
+	</div>
+	<div class="columnsContainer">
+		<div class="leftColumn-eventDetail">
+			<p style="margin-left: 5px;"><span class="dot mr-2"></span>{{ object.event_type }}</p>
+			<p style="color: #008080; margin-left: 5px;">Start: 
+				<span style="color: #000">
+				{{ object.date_start }}
+				{% if object.time_start %}
+					, {{ object.time_start }}
+				{% endif %}
+				</span>
+			</p>
+			<p style="color: #008080; margin-left: 5px;">End: 
+				<span style="color: #000">
+				{{ object.date_end }}
+				{% if object.time_end %}
+					, {{ object.time_end }}
+				{% endif %}
+				</span>
+			</p>
+			{% if object.venue %}
+			<p style="color: #008080;">Venue: 
+				<span style="color: #000">
+					{{ object.venue }}
+				</span>
+			</p>
+			{% endif %}
+			<p style="color: #008080; margin-left: 5px;">Degree Program Restriction: 
+				<span style="color: #000">
+					{% if object.deg_prog %}
+						{{ object.deg_prog }}
+					{% else %}
+						None
+					{% endif %}
+				</span>
+			</p>
+			<p style="color: #008080; margin-left: 5px;">College Restriction: 
+				<span style="color: #000">
+					{% if object.college %}
+						{{ object.college }}
+					{% else %}
+						None
+					{% endif %}
+				</span>
+			</p>
+			<span class = "about"><b>ABOUT THE EVENT</b></span>
+			<p class="mt-3 mx-5"> {{object.description}}</p>
+			<!-- <a class="bookmark">  -->
+		</div>
+
+		<div class="rightColumn-eventDetail">
+			{% if messages %}
+	            {% for message in messages %}
+	              <div class="alert alert-{{ message.tags }} mt-4">
+	                {{ message }}
+	              </div>
+	            {% endfor %}
+	        {% endif %}
+			<span class = "about"><b>Participants</b></span>
+			{% for s in object.participants.all %}
+				<ul class="list-participants">
+	              	<li class="list-participants ml-4">
+						<p>{{s.username}}</p>
+					</li>
+				</ul>
+			{% endfor %}
+
+			 {%if request.user.is_authenticated%}
+			 	{% if not user.is_staff %}
+			    	{% if user_joined%}
+					    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Unjoin">
+							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Join">
+							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+						</form>
+					{% endif %}
+
+					{% if user_bookmarked %}
+					    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Remove bookmark">
+						</form>
+					{% else %}
+						<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<input type="submit" value="Bookmark">
+						</form>
+					{% endif %}
+				{% endif %}
+		    {%endif%}
+		</div>
+	</div>   
+{% endblock content %}

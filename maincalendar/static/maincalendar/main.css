@@ -1,0 +1,281 @@
+/*This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016*/
+
+/* 
+  02/08/19
+  Allure Tanquintic
+    created the file.
+    no edits yet.
+
+  03/08/19
+  Christel Espino
+    added sticky sidebar  
+
+  03/21/19
+  Allure Tanquintic
+    Added btn-custom, ul, p, shortenlines, #calendar, leftColumn, rightColumn, and imgshadow 
+*/
+
+body {
+  background: #fafafa;
+  color: #333333;
+  height: 100vh;
+  /*font-family: Arial, Helvetica Neue, Helvetica, sans-serif;*/
+  /*font-style: Open-sans-lite;*/
+  font-size: 14px;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+.navbar {
+  background-color: #8f1838;
+  text-align: center;
+  z-index: 9999;
+  /*margin-bottom: 0px;*/
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.btn-custom{
+  background-color: #005740;
+  color: #ffffff;
+  font-size: 9pt;
+  height: 28px;
+}
+
+ul.list-group{
+  list-style: none;
+  margin: 1em; 
+  background: linear-gradient( 
+            90deg,
+            #005740,
+            #005740 10px,
+            #fff 10px,
+            #fff 10px,
+            #fff 40px);
+}
+
+ul.list-group:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+p{
+  font-size: 10pt;
+}
+
+.sticky-sidebar {
+  transition: all .3s ease-out;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.shortenlines {
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 16px;
+  max-height: 32px;
+  max-width: 18em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+#calendar {
+  max-width: 850px;
+  margin-top: 5rem;
+}
+
+.leftColumn{
+  margin-left: 2em;
+}
+
+.announcementHeader{
+  top: 5em; 
+  right: 0.1em; 
+  position: absolute; 
+}
+
+.righttopColumn{
+  border: 1px transparent;
+  background-color: #efefef;
+  height: 20.3em;
+  width: 23.54em;
+  top: 7.95em; 
+  right: 0.15em; 
+  position: absolute; 
+  overflow-y: auto;
+}
+
+.eventsHeader{
+  top: 32em; 
+  right: 0.15em; 
+  position: absolute;
+  position: -webkit-sticky;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.rightbottomColumn{
+  border: 1px transparent;
+  background-color: #efefef;
+  height: 20.7em;
+  width: 23.6em;
+  top: 35.1em; 
+  right: 0.15em; 
+  position: absolute;
+  overflow-y: auto;
+}
+
+img.imgshadow{
+  position: sticky;
+  position: -webkit-sticky;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img{
+  z-index: 9998
+}
+
+.addbutton {
+    position: absolute;
+    right: 0.15em;
+}
+.announcement{
+  top: 28.5em;
+}
+.event{
+  top: 56em;
+}
+
+/*SCROLL STYLES*/
+/* width */
+.righttopColumn::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.righttopColumn::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.righttopColumn::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+.righttopColumn::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/*BOTTOM PART OF RIGHT COLUMN*/
+.rightbottomColumn::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.rightbottomColumn::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.rightbottomColumn::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+  opacity: 0.2;
+}
+
+/* Handle on hover */
+.rightbottomColumn::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+a{
+  text-decoration: none !important;
+}
+
+/*###############################################################################*/
+/*event_details.html*/
+
+.title-header{
+  margin-top: 4.4rem;
+  background-color: #005740;
+  padding: 10px;
+  line-height: 20px;
+  text-align: left;
+}
+
+
+.back-button img{
+  margin-left: 14px;
+  margin-right: 5px;
+  width: 28px;
+  height: 28px;
+}
+
+.title-header p{
+  font-size: 14pt;
+  color:#fff;
+  margin: 0 0 0 0px;
+  padding:0;
+  display: inline-block;
+}
+
+hr{
+  border-width: 5px;
+  border-color: #005740;
+}
+
+.leftColumn-eventDetail{
+  margin-left: 1.7em;
+}
+
+.dot{
+  height: 18px;
+  width: 18px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.leftColumn-eventDetail p{
+  font-size: 12pt;
+  line-height: 15px;
+}
+.rightColumn-eventDetail{
+  height: 20.3em;
+  width: 42em;
+  top: 13em; 
+  right: 0.15em; 
+  position: absolute; 
+  overflow-y: auto;
+}
+
+.about{
+  font-size: 13pt;
+  background-color: #005740;
+  color:#fff;
+  padding: 4px 15px;
+}
+
+/*fix*/
+ul.list-participants{
+  list-style: none;
+}
+
+.participants-area{
+  background-color: #efefef;
+  height: 15em;
+  width: 30em;
+}

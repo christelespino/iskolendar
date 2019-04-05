@@ -1,0 +1,87 @@
+<!--#This is a course requirement for CS 192 Software Engineering II under the supervision of Asst. Prof. Ma. Rowena C. Solamo of the Department of Computer Science, College of Engineering, University of the Philippines, Diliman for the AY 2015-2016-->
+
+<!--
+02/17/19
+	Patrick Joseph Sanchez
+		created the initial form for register page
+02/21/19
+	Allure Tanquintic
+		edited layout		
+-->
+
+{% extends "maincalendar/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset >
+				<legend class="border-bottom mb-4">Create Account</legend>
+					<div class="fieldWrapper">
+        			{{ form.student_number.errors }}
+        			{{ form.student_number.label_tag }} {{ form.student_number }}
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.username.errors }}
+        			{{ form.username.label_tag }} {{ form.username }}
+        			<p class="help"> {{ form.username.help_text|safe }} </p>
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.password1.errors }}
+        			{{ form.password1.label_tag }} {{ form.password1 }}
+        			<p class="help"> {{ form.password1.help_text|safe }} </p>
+        			</div>
+    				<div class="fieldWrapper">
+        			{{ form.password2.errors }}
+        			{{ form.password2.label_tag }} {{ form.password2 }}
+        			<p class="help"> {{ form.password2.help_text|safe }} </p>
+        			</div>
+    				<div class="fieldWrapper">
+        			{{ form.name.errors }}
+        			{{ form.name.label_tag }} {{ form.name }}
+        			<p class="help"> {{ form.name.help_text|safe }} </p>
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.position.errors }}
+        			{{ form.position.label_tag }} {{ form.position }}
+        			<p class="help"> Enter N/A if not applicable. </p>
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.organization.errors }}
+        			{{ form.organization.label_tag }} {{ form.organization }}
+        			<p class="help"> Enter N/A if not applicable. </p>
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.org_acronym.errors }}
+        			{{ form.org_acronym.label_tag }} {{ form.org_acronym }}
+        			<p class="help"> Enter N/A if not applicable. </p>
+        			</div>
+                    <div class="fieldWrapper">
+                    {{ form.college.errors }}
+                    {{ form.college.label_tag }} {{ form.college }}
+                    </div>
+        			<div class="fieldWrapper">
+        			{{ form.degree_program.errors }}
+        			{{ form.degree_program.label_tag }} {{ form.degree_program }}
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.email.errors }}
+        			{{ form.email.label_tag }} {{ form.email }}
+        			<p class="help"> {{ form.email.help_text|safe }} </p>
+        			</div>
+        			<div class="fieldWrapper">
+        			{{ form.is_staff }} <p class="help">Mark this box if you are signing up as an Organization representative.</p>
+        			</div>
+			</fieldset>
+			<br>
+			<div class="form-group">
+				<button class="btn btn-success active" type="submit">Sign Up</button>
+			</div>
+		</form>
+		<div class="border-top pt-3">
+			<small class="text-muted">
+				Already have an account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+			</small>
+		</div>
+	</div>
+{% endblock content %}
