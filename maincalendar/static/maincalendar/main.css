@@ -332,6 +332,14 @@ hr{
   right: 30px; 
 }
 
+.btn-edit-delete{
+  background-color: #005740;
+  color: #ffffff;
+  font-size: 12pt;
+  width: 100px;
+  font-weight: bold;
+}
+
 .custom{
   padding: 6px;
   margin: 0.5em 1.5em 0.3em 1.5em;

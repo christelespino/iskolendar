@@ -69,11 +69,11 @@
         right: 'next'
       },
       dateClick: function(info) {
-        alert('clicked ' + info.date);
+        alert('clicked ' + info);
         // alert('Event: ' + info.title); 
       },
-      eventClick: function(calEvent, jsEvent, view) {
-          alert('Event: ' + calEvent.title);
+      eventClick: function(event) {
+          alert('Event: ' + event.title);
       },
       eventLimit: true, // allow "more" link when too many events
       events: [                   // get event details 

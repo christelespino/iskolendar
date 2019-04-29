@@ -19,63 +19,63 @@
 				<legend class="border-bottom mb-4">Create Account</legend>
 					<div class="fieldWrapper">
         			{{ form.student_number.errors }}
-        			{{ form.student_number.label_tag }} {{ form.student_number }}
+                    {{ form.student_number|as_crispy_field }}
         			</div>
         			<div class="fieldWrapper">
         			{{ form.username.errors }}
-        			{{ form.username.label_tag }} {{ form.username }}
-        			<p class="help"> {{ form.username.help_text|safe }} </p>
+                    {{ form.username|as_crispy_field }}
+        			<!-- <p class="help"> {{ form.username.help_text|safe }} </p> -->
         			</div>
         			<div class="fieldWrapper">
         			{{ form.password1.errors }}
-        			{{ form.password1.label_tag }} {{ form.password1 }}
-        			<p class="help"> {{ form.password1.help_text|safe }} </p>
+        			{{ form.password1|as_crispy_field }}
+        			<!-- <p class="help"> {{ form.password1.help_text|safe }} </p> -->
         			</div>
     				<div class="fieldWrapper">
         			{{ form.password2.errors }}
-        			{{ form.password2.label_tag }} {{ form.password2 }}
-        			<p class="help"> {{ form.password2.help_text|safe }} </p>
+        			{{ form.password2|as_crispy_field }}
+        			<!-- <p class="help"> {{ form.password2.help_text|safe }} </p> -->
         			</div>
     				<div class="fieldWrapper">
         			{{ form.name.errors }}
-        			{{ form.name.label_tag }} {{ form.name }}
-        			<p class="help"> {{ form.name.help_text|safe }} </p>
-        			</div>
+        			{{ form.name|as_crispy_field }}
+        			<!-- <p class="help"> {{ form.name.help_text|safe }} </p>
+        			</div> -->
         			<div class="fieldWrapper">
         			{{ form.position.errors }}
-        			{{ form.position.label_tag }} {{ form.position }}
-        			<p class="help"> Enter N/A if not applicable. </p>
+        			{{ form.position|as_crispy_field }}
+        			<!-- <p class="help"> Enter N/A if not applicable. </p> -->
         			</div>
         			<div class="fieldWrapper">
         			{{ form.organization.errors }}
-        			{{ form.organization.label_tag }} {{ form.organization }}
-        			<p class="help"> Enter N/A if not applicable. </p>
+        			{{ form.organization|as_crispy_field }}
+        			<!-- <p class="help"> Enter N/A if not applicable. </p> -->
         			</div>
         			<div class="fieldWrapper">
         			{{ form.org_acronym.errors }}
-        			{{ form.org_acronym.label_tag }} {{ form.org_acronym }}
-        			<p class="help"> Enter N/A if not applicable. </p>
+        			{{ form.org_acronym|as_crispy_field }}
+        			<!-- <p class="help"> Enter N/A if not applicable. </p> -->
         			</div>
                     <div class="fieldWrapper">
                     {{ form.college.errors }}
-                    {{ form.college.label_tag }} {{ form.college }}
+                    {{ form.college|as_crispy_field }}
                     </div>
         			<div class="fieldWrapper">
         			{{ form.degree_program.errors }}
-        			{{ form.degree_program.label_tag }} {{ form.degree_program }}
+        			{{ form.degree_program|as_crispy_field }}
         			</div>
         			<div class="fieldWrapper">
         			{{ form.email.errors }}
-        			{{ form.email.label_tag }} {{ form.email }}
-        			<p class="help"> {{ form.email.help_text|safe }} </p>
+        			{{ form.email|as_crispy_field }}
+        			<!-- <p class="help"> {{ form.email.help_text|safe }} </p> -->
         			</div>
         			<div class="fieldWrapper">
-        			{{ form.is_staff }} <p class="help">Mark this box if you are signing up as an Organization representative.</p>
+        			{{ form.is_staff }} <span class="help">Mark this box if you are signing up as an Organization representative.</span>
         			</div>
 			</fieldset>
 			<br>
 			<div class="form-group">
-				<button class="btn btn-success active" type="submit">Sign Up</button>
+				<button class="btn btn-custom" type="submit" style="height: 35px; font-size: 10pt;">Sign Up</button>
 			</div>
 		</form>
 		<div class="border-top pt-3">

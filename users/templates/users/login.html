@@ -12,13 +12,12 @@
 	<div class="content-section">
 		<form method="POST">
 			{% csrf_token %}
-			<fieldset >
+			<fieldset>
 				<legend class="border-bottom mb-4">Log in</legend>
-				<legend class="border-bottom mb-4">Welcome!</legend>
-				{{ form|crispy}}
+				{{ form|crispy }}
 			</fieldset>
 			<div class="form-group">
-				<button class="btn btn-success active" type="submit">LOGIN</button>
+				<button class="btn btn-custom" type="submit" style="height: 35px; font-size: 10pt;">LOGIN</button>
 			</div>
 		</form>
 		<div class="border-top pt-3">

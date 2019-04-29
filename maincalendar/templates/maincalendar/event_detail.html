@@ -76,7 +76,7 @@ Allure Tanquintic
 				{% endif %}
 			{% endif %}
 
-			<p style="margin-left: 5px;"><span class="dot mr-2"></span>{{ object.event_type }}</p>
+			<p style="margin-left: 5px; margin-top: 1em;"><span class="dot mr-2"></span>{{ object.event_type }}</p>
 
 			<p style="color: #008080; margin-left: 5px;">Start: 
 				<span style="color: #000">
@@ -128,29 +128,8 @@ Allure Tanquintic
 		<div class="rightColumn-eventDetail">
 			{% if messages %}
 	            {% for message in messages %}
-	            	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">{{ message }}</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        ...
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					        <button type="button" class="btn btn-primary">Save changes</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-	              <!-- <div class="alert alert-{{ message.tags }} mt-4">
-	                {{ message }}
-	              </div>
- -->	            {% endfor %}
+	            	<p>{{ message }}</p>
+	            {% endfor %}
 	        {% endif %}
 			<span class = "about"><b>Participants</b></span>
 			<div class = "participants-area">
@@ -169,7 +148,7 @@ Allure Tanquintic
 
 			 {% if user.is_authenticated%}
 			 	{% if not user.is_staff %}
-			    	{% if user_joined%}
+			    	{% if user_joined %}
 					    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
 							<input type="hidden" value="{{ object.id }}" name="event" id="event">
 							<input class="btn btn-join" type="submit" value="Unjoin">
@@ -181,7 +160,13 @@ Allure Tanquintic
 						</form>
 					{% endif %}
 				{% endif %}
-		    {%endif%}
+		    {% endif %}
 		</div>
-	</div>   
+	</div>  
+	<!-- {% if user.is_authenticated%}
+		{% if user.is_staff %}
+			<a class="btn btn-edit-delete mt-2 mr-2 ml-2" href="{% url 'event-update' object.id%}"><b>Edit</b></a>
+			<a class="btn btn-edit-delete mt-2" href="{% url 'event-delete' object.id%}"><b>Delete</b></a>
+		{% endif %}
+	{% endif %} -->
 {% endblock content %}
