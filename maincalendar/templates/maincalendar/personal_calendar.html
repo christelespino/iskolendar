@@ -44,10 +44,15 @@
 <title>Iskolendar</title>
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'maincalendar/main.css' %}">
 <link href="{% static 'maincalendar/calendar/packages/core/main.css' %}" rel='stylesheet'/>
@@ -66,7 +71,6 @@
     // var events = '{{ data|escapejs }}';
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid' ],
-      defaultDate: '2019-03-12',
       editable: false,
       selectable: true,
       header: {
@@ -75,7 +79,7 @@
         right: 'next'
       },
       dateClick: function(info) {
-        alert('clicked ' + info.dateStr);
+        alert('clicked ' + info.date);
         // alert('Event: ' + info.title); 
       },
       eventClick: function(calEvent, jsEvent, view) {
@@ -83,28 +87,29 @@
       },
       eventLimit: true, // allow "more" link when too many events
       events: [                   // get event details 
-        // {% for event in data %}
-        // {
-        //   id: "{{ event.id }}",
-        //   title: "{{ event.title }}",
-        //   start: "{{ event.date_start }}",
-        //   end: "{{ event.date_end }}",
-        // },
-        // {% endfor %}
-        {% for event in bm_events %}
+        {% for event in data %}
         {
           id: "{{ event.id }}",
           title: "{{ event.title }}",
-          start: "{{ event.date_start }}",
-          end: "{{ event.date_end }}",
+          start: "{{ event.start }}",
+          end: "{{ event.end }}",
+          color: "{{ event.color }}",
         },
         {% endfor %}
+        // {% for bm in bm_events %}
+        // {
+        //   id: "{{ bm.id }}",
+        //   title: "{{ bm.title }}",
+        //   start: "{{ bm.start }}",
+        //   end: "{{ bm.end }}",
+        //   color: 'yellow',
+        // },
+        // {% endfor %}
       ]
     });
 
     calendar.render();
   });
-
 </script>
 </head>
 
@@ -124,31 +129,29 @@
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
-              {% if not org %}
-              <li class ="nav-item active">
-                <a class="nav-link" href="{% url 'personal-calendar' %}">My Calendar</a>
-              </li>
-              {% endif %}
-                {% if user.is_authenticated %}
-              <li class ="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">Log out</a>
-                {% else %}
-                    <a class="nav-link" href="{% url 'login' %}">Log in</a>
-                  </li>
-                  <li class ="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+              {% if user.is_authenticated %}
+                {% if not org %}
+                <li class ="nav-item active">
+                  <a class="nav-link" href="{% url 'personal-calendar' %}">My Calendar</a>
+                </li>
                 {% endif %}
-              </li>
+                <li class ="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+              {% else %}
+                    <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                </li>
+                <li class ="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+              {% endif %}
           </ul>
         </div>
       </div>
     </nav>
   </header>
-  <div class="columnsContainer">
-  	<div class="leftColumn">
-      <div class="leftColumn" id='calendar'></div>
-    </div>
 
+  <div class="columnsContainer">
+	  <div class="leftColumn" id='calendar'></div>
     <!-- SECTION LABELS -->
     <a class="announcementHeader" href="{% url 'announcement-view' %}">
       <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
@@ -160,26 +163,55 @@
         <div class="announcementslist">
           {% if announcements %}
             {% for announcement in announcements %} 
-              <ul class="list-group">
-                <li class="list-group-item-light ml-4 shortenlines">
-                  <h5>{{ announcement.event }}</h5>
-                </li>
-                <li class="list-group-item-light ml-4 shortenlines">
-                  <p> {{ announcement.body }} </p>
-                </li>
-                <li align="center">
-                  {% if org and id == announcement.author.pk %}
-                      <a class="btn btn-custom mt-2 mr-3" href="{% url 'announcement-update' announcement.id%}"><b>Edit</b></a>
-                      <a class="btn btn-custom mt-2" href="{% url 'announcement-delete' announcement.id%}"><b>Delete</b></a>
-                  {% endif %}
-                </li>
-              </ul>
+              <a data-toggle="modal" data-target="#announcement-item{{ announcement.id }}">
+                <ul id='rcolumn' class="list-group">
+                  <li class="list-group-item-light ml-4 shortenlines">
+                    <h5>{{ announcement.event }}</h5>
+                  </li>
+                  <li class="list-group-item-light ml-4 shortenlines">
+                    <p style="font-size: 9pt;">{{ announcement.date_posted }}</p>
+                  </li>
+                  <li class="list-group-item-light ml-4 shortenlines">
+                    <p> [{{ announcement.subject }}] </p>
+                  </li>
+                  <li align="center">
+                    {% if org and id == announcement.author.pk %}
+                        <a class="btn btn-custom mt-2 mr-3" href="{% url 'announcement-update' announcement.id%}"><b>Edit</b></a>
+                        <a class="btn btn-custom mt-2" href="{% url 'announcement-delete' announcement.id%}"><b>Delete</b></a>
+                    {% endif %}
+                  </li>
+                </ul>
+              </a>
+
+              <!-- Modal -->
+              <div class="modal fade" id="announcement-item{{ announcement.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header sidepane-modal">
+                      <h4 class="modal-title" id="exampleModalLongTitle" style="color: #ffffff;">{{ announcement.event }}</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <h5><b>{{ announcement.subject }}</b></h5>
+                      <p style="font-size: 9pt;">{{ announcement.date_posted }}</p>
+                      <br>
+                      <p>{{ announcement.body }}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% endfor %}    
           {% else %}
-            <p class="mt-3" style="text-align: center"> No announcements this week. </p>
+            <p class="mt-3" style="text-align: center"> No announcement this week. </p>
           {% endif %}
         </div>
       </div>
+    </div>
       {% if org%}
         <a class="addbutton announcement" href="{% url 'announcement-create' %}">
           <img src="{% static 'maincalendar/add.png' %}"/>
@@ -187,9 +219,10 @@
       {% endif %}
 
       <div class="rightbottomColumn">
-        {% if bm_events %}
-          {% for event in bm_events %}
-            <ul class="list-group">
+        {% if data %}
+          {% for event in data %}
+          <a href="{% url 'event-detail' event.id%}">
+            <ul id='rcolumn' class="list-group">
               <li class="list-group-item-light ml-4">
                 <h5> {{ event.title }}</h5>
                 <!-- <h6><form action="{% url 'daily-view' %}" method="GET">
@@ -208,9 +241,10 @@
                 {% endif %}
               </li>
             </ul>
+          </a>
           {% endfor %}
         {% else %}
-          <p> Nothing to display. </p>
+          <p class="mt-3" style="text-align: center"> Nothing to display. </p>
         {% endif %}
       </div> 
     </div>
@@ -220,5 +254,13 @@
       </a>
     {% endif %}
   </div> 
+
+<script>
+	$(document).ready(function(){
+	  $("#myBtn").click(function(){
+	    $("#myModal").modal();
+	  });
+	});
+</script>
 </body>
 </html>

@@ -11,7 +11,10 @@ Allure Tanquintic
     	added Join Button
 03/21/2019
 	Christel Espino
-		Fixed join event    	
+		Fixed join event
+04/09/2019
+	Allure Tanquintic
+		Updated UI    	
  -->
 
 {% extends "maincalendar/index.html" %}
@@ -28,12 +31,53 @@ Allure Tanquintic
 	</div>
 
 	<div class = "pt-2 px-4">
-		<span style = "font-size: 13pt;">Hosted By: {{ object.org }}</span>
+		<span style = "font-size: 13pt;">Hosted By: {{ org }}</span>
 		<hr>
+		<!-- {% if user.is_authenticated%}
+			 	{% if not user.is_staff %}
+					{% if user_bookmarked %}
+					    <form action="{% url 'removebookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<span data-toggle="tooltip" data-placement="bottom" title="Remove bookmark">
+								<input class="bm" type="image" src="{% static 'maincalendar/bm-filled.svg' %}" alt=”submit” name=”submit”>
+							</span>
+						</form>
+					{% else %}
+						<form action="{% url 'addbookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<span data-toggle="tooltip" data-placement="bottom" title="Bookmark this event">
+								<input class="bm" type="image" src="{% static 'maincalendar/bm-hollow.svg' %}" alt=”submit” name=”submit”>
+							</span>
+						</form>
+					{% endif %}
+				{% endif %}
+			{% endif %} -->
 	</div>
+
 	<div class="columnsContainer">
 		<div class="leftColumn-eventDetail">
+			{% if user.is_authenticated%}
+			 	{% if not user.is_staff %}
+					{% if user_bookmarked %}
+					    <form action="{% url 'removebookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<span data-toggle="tooltip" data-placement="bottom" title="Remove bookmark">
+								<input class="bm" type="image" src="{% static 'maincalendar/bm-filled.svg' %}" alt=”submit” name=”submit”>
+							</span>
+						</form>
+					{% else %}
+						<form action="{% url 'addbookmark' %}" method="GET">
+							<input type="hidden" value="{{ object.id }}" name="event" id="event">
+							<span data-toggle="tooltip" data-placement="bottom" title="Bookmark this event">
+								<input class="bm" type="image" src="{% static 'maincalendar/bm-hollow.svg' %}" alt=”submit” name=”submit”>
+							</span>
+						</form>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+
 			<p style="margin-left: 5px;"><span class="dot mr-2"></span>{{ object.event_type }}</p>
+
 			<p style="color: #008080; margin-left: 5px;">Start: 
 				<span style="color: #000">
 				{{ object.date_start }}
@@ -77,51 +121,63 @@ Allure Tanquintic
 			</p>
 			<span class = "about"><b>ABOUT THE EVENT</b></span>
 			<p class="mt-3 mx-5"> {{object.description}}</p>
-			<!-- <a class="bookmark">  -->
+
+			
 		</div>
 
 		<div class="rightColumn-eventDetail">
 			{% if messages %}
 	            {% for message in messages %}
-	              <div class="alert alert-{{ message.tags }} mt-4">
+	            	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">{{ message }}</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        ...
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					        <button type="button" class="btn btn-primary">Save changes</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+	              <!-- <div class="alert alert-{{ message.tags }} mt-4">
 	                {{ message }}
 	              </div>
-	            {% endfor %}
+ -->	            {% endfor %}
 	        {% endif %}
 			<span class = "about"><b>Participants</b></span>
-			{% for s in object.participants.all %}
-				<ul class="list-participants">
-	              	<li class="list-participants ml-4">
-						<p>{{s.username}}</p>
-					</li>
-				</ul>
-			{% endfor %}
+			<div class = "participants-area">
+				{% if participants %}
+						<ul class = list-group style="list-style: none;">
+						{% for s in participants %}
+			              	<li class="list-group-item-light custom ">
+								{{ s.name }} - {{ s.degree_program }}
+							</li>
+						{% endfor %}
+						</ul>
+				{% else %}
+					<p class="mt-3" style="text-align: center"> No participants yet. </p>
+				{% endif %}
+			</div>
 
-			 {%if request.user.is_authenticated%}
+			 {% if user.is_authenticated%}
 			 	{% if not user.is_staff %}
 			    	{% if user_joined%}
 					    <form class="col-lg-12 mt-4" action="{% url 'removeparticipant' %}" method="GET">
 							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<input type="submit" value="Unjoin">
-							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
+							<input class="btn btn-join" type="submit" value="Unjoin">
 						</form>
 					{% else %}
 						<form class="col-lg-12 mt-4" action="{% url 'addparticipant' %}" method="GET">
 							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<input type="submit" value="Join">
-							<!--<a class="btn btn-success active" type="submit" value="{{ object.id }}"> Join </a>-->
-						</form>
-					{% endif %}
-
-					{% if user_bookmarked %}
-					    <form class="col-lg-12 mt-4" action="{% url 'removebookmark' %}" method="GET">
-							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<input type="submit" value="Remove bookmark">
-						</form>
-					{% else %}
-						<form class="col-lg-12 mt-4" action="{% url 'addbookmark' %}" method="GET">
-							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<input type="submit" value="Bookmark">
+							<input class="btn btn-join" type="submit" value="Join">
 						</form>
 					{% endif %}
 				{% endif %}

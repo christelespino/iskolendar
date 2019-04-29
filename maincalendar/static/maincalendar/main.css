@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .content-section {
   background: #ffffff;
-  padding: 10px 20px;
+  padding: 6em;
   border: 1px solid #dddddd;
   border-radius: 3px;
   margin-bottom: 20px;
@@ -49,9 +49,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff;
   font-size: 9pt;
   height: 28px;
+  font-weight: bold;
 }
 
-ul.list-group{
+#rcolumn{
   list-style: none;
   margin: 1em; 
   background: linear-gradient( 
@@ -63,7 +64,7 @@ ul.list-group{
             #fff 40px);
 }
 
-ul.list-group:hover{
+#rcolumn:hover{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -95,29 +96,35 @@ p{
 }
 
 .leftColumn{
-  margin-left: 2em;
+  margin-left: 3em;
+  padding-right: 3em;
+  position: relative;
+  width: 70%;
 }
 
 .announcementHeader{
+  width: 25.8%; 
   top: 5em; 
   right: 0.1em; 
-  position: absolute; 
+  position: absolute;
+  position: -webkit-sticky;
 }
 
 .righttopColumn{
   border: 1px transparent;
   background-color: #efefef;
   height: 20.3em;
-  width: 23.54em;
+  width: 25.8%;
   top: 7.95em; 
   right: 0.15em; 
   position: absolute; 
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .eventsHeader{
   top: 32em; 
   right: 0.15em; 
+  width: 25.8%;
   position: absolute;
   position: -webkit-sticky;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -127,11 +134,11 @@ p{
   border: 1px transparent;
   background-color: #efefef;
   height: 20.7em;
-  width: 23.6em;
+  width: 25.8%;
   top: 35.1em; 
   right: 0.15em; 
   position: absolute;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 img.imgshadow{
@@ -145,8 +152,8 @@ img{
 }
 
 .addbutton {
-    position: absolute;
-    right: 0.15em;
+  position: absolute;
+  right: 0.15em;
 }
 .announcement{
   top: 28.5em;
@@ -205,6 +212,12 @@ a{
   text-decoration: none !important;
 }
 
+.btn-announcementform{
+  background-color: #005740;
+  color: #ffffff;
+  font-size: 9pt;
+  font-weight: bold;
+}
 /*###############################################################################*/
 /*event_details.html*/
 
@@ -235,10 +248,15 @@ a{
 hr{
   border-width: 5px;
   border-color: #005740;
+  margin-top: 8px;
+  margin-bottom: 0px;
 }
 
 .leftColumn-eventDetail{
   margin-left: 1.7em;
+  /*margin-top: 0px;*/
+  width: 50%;
+
 }
 
 .dot{
@@ -254,12 +272,12 @@ hr{
   line-height: 15px;
 }
 .rightColumn-eventDetail{
-  height: 20.3em;
-  width: 42em;
+  height: 65%;
+  width: 43%;
   top: 13em; 
   right: 0.15em; 
   position: absolute; 
-  overflow-y: auto;
+  margin-right: 2em;
 }
 
 .about{
@@ -269,13 +287,56 @@ hr{
   padding: 4px 15px;
 }
 
-/*fix*/
-ul.list-participants{
-  list-style: none;
+.participants-area{
+  margin-top: 1em;
+  background-color: #dddddd;
+  height: 80%;
+  overflow: auto;
 }
 
-.participants-area{
-  background-color: #efefef;
-  height: 15em;
-  width: 30em;
+.participants-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.participants-area::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+.participants-area::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+.participants-area::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.bm{
+  float: right;
+}
+
+.btn-join{
+  background-color: #005740;
+  color: #ffffff;
+  font-size: 14pt;
+  width: 100px;
+  /*height: 28px;*/
+  font-weight: bold;
+  position: fixed;
+  bottom: 30px;
+  right: 30px; 
+}
+
+.custom{
+  padding: 6px;
+  margin: 0.5em 1.5em 0.3em 1.5em;
+}
+
+.sidepane-modal{
+  background-color: #005740;
 }

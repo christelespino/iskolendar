@@ -79,7 +79,7 @@ def maincalendar(request):
 
 	}
 	return render(request, 'maincalendar/maincalendar.html', context)
-
+	
 def daily_view(request):
 	try:
 		day = datetime.datetime.strptime(request.GET.get('date'), '%b. %d, %Y')
@@ -135,19 +135,45 @@ def removebookmark(request):
 		return redirect('maincalendar')		
 
 def personal_calendar(request):
+	data = []
+	bm_events = []
 	userprof = Profile.objects.filter(user = request.user).first()
-	if request.user.is_authenticated:
-		context = {
-			'data' : request.user.events_joined.all().order_by('date_start'),
-			'bm_events': userprof.bookmarks.all().order_by('date_start'),
-			'logged' : request.user.is_authenticated
-		}
-	else:
-		context = {
-			'data' : None,
-			'bm_events': None,
-			'logged' : request.user.is_authenticated
-		}	
+	curr_date = datetime.date.today()
+	start_week = curr_date - datetime.timedelta(curr_date.weekday())
+	end_week = start_week + datetime.timedelta(7)
+
+	joined = request.user.events_joined.all().order_by('date_start')
+	for event in joined:
+		data.append({
+			'id': event.id,
+			'title': event.title,
+			'start': event.date_start.strftime('%Y-%m-%d'),
+			'end': event.date_end.strftime('%Y-%m-%d'),
+			'description': event.description,
+			'color': 'yellow'
+		})
+
+	bm_event = userprof.bookmarks.all().order_by('date_start')
+	for event in bm_event:
+		if event not in joined:
+			data.append({
+				'id': event.id,
+				'title': event.title,
+				'start': event.date_start.strftime('%Y-%m-%d'),
+				'end': event.date_end.strftime('%Y-%m-%d'),
+				'description': event.description,
+				'color': 'default'
+			})
+
+	context = {
+		'org' : request.user.is_staff,
+		'announcements' : Announcement.objects.all().filter(date_posted__range=[start_week, end_week]),
+		'id'  : request.user.pk,
+		'date' : datetime.date.today(),
+		'data' : data,
+		'logged' : request.user.is_authenticated
+	}
+
 	return render(request, 'maincalendar/personal_calendar.html', context)
 
 class EventDetailView(DetailView):
@@ -155,21 +181,28 @@ class EventDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		context['org'] = Profile.objects.filter(user=context['object'].author).first().organization
+		if self.request.user.is_authenticated:
+			userprof = Profile.objects.filter(user = self.request.user).first()
 
-		userprof = Profile.objects.filter(user = self.request.user).first()
+			context['user_bookmarked'] = False
+			for s in userprof.bookmarks.all():
+				if s == context['object']:
+					context['user_bookmarked'] = True
+					break
 
-		context['user_bookmarked'] = False
-		for s in userprof.bookmarks.all():
-			if s == context['object']:
-				context['user_bookmarked'] = True
-				break
+			context['user_joined'] = False
 
-		context['user_joined'] = False
+			for s in context['object'].participants.all():
+				if s == self.request.user:
+					context['user_joined'] = True
+					break
 
-		for s in context['object'].participants.all():
-			if s == self.request.user:
-				context['user_joined'] = True
-				break
+			par = []
+			for x in context['object'].participants.all():
+				par.append(Profile.objects.filter(user = x).first())
+			context['participants'] = par 
+			
 		return context
 
 class EventCreateView(LoginRequiredMixin, CreateView):
