@@ -33,7 +33,10 @@
     	added addbookmark and removebookmark function	
 04/22/2019
 	Allure Tanquintic
-		edited personal_calendar function	  	
+		edited personal_calendar function	
+04/30/2019
+	Christel Espino
+		fixed org names in event detail, main calendar, personal calendar		  	
 '''
 
 from django.shortcuts import render, redirect
@@ -81,6 +84,8 @@ def maincalendar(request):
 		'data' : data,
 
 	}
+	for x in context['events']:
+		x.orgname = Profile.objects.filter(user=x.author).first().organization
 	return render(request, 'maincalendar/maincalendar.html', context)
 	
 def daily_view(request):
@@ -153,6 +158,7 @@ def personal_calendar(request):
 			'start': event.date_start.strftime('%Y-%m-%d'),
 			'end': event.date_end.strftime('%Y-%m-%d'),
 			'description': event.description,
+			'author': event.author,
 			'color': 'yellow'
 		})
 
@@ -165,6 +171,7 @@ def personal_calendar(request):
 				'start': event.date_start.strftime('%Y-%m-%d'),
 				'end': event.date_end.strftime('%Y-%m-%d'),
 				'description': event.description,
+				'author': event.author,
 				'color': 'default'
 			})
 
@@ -176,12 +183,14 @@ def personal_calendar(request):
 		'data' : data,
 		'logged' : request.user.is_authenticated
 	}
-
+	
+	for x in context['data']:
+		x['orgname'] = Profile.objects.filter(user=x.get("author")).first().organization
 	return render(request, 'maincalendar/personal_calendar.html', context)
 
 class EventDetailView(DetailView):
 	model = Event
-
+ 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['org'] = Profile.objects.filter(user=context['object'].author).first().organization
