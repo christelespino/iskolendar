@@ -210,10 +210,10 @@ class EventDetailView(DetailView):
 					context['user_joined'] = True
 					break
 
-			par = []
-			for x in context['object'].participants.all():
-				par.append(Profile.objects.filter(user = x).first())
-			context['participants'] = par 
+		par = []
+		for x in context['object'].participants.all():
+			par.append(Profile.objects.filter(user = x).first())
+		context['participants'] = par 
 
 		return context
 
