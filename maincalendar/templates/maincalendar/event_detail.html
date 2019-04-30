@@ -19,14 +19,14 @@ Allure Tanquintic
 	Allure Tanquintic
 		Fixed Bookmarks and Join event UI
  -->
-
+ 
 {% extends "maincalendar/index.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 	<div class="title-header">
 		<p>
-			<a class="back-button" href="{% url 'maincalendar' %}">
+			<a class="back-button" href="{{request.META.HTTP_REFERER}}">
           		<img src="{% static 'maincalendar/Back_Arrow.png' %}"/>
           	</a>
           	<b>{{ object.title }}</b>

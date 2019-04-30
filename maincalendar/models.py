@@ -24,15 +24,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 EVENT_TYPE = (
-	('Seminar', 'SEMINAR'),
-	('Workshop', 'WORKSHOP'),
-	('Convention', 'CONVENTION'),
-	('Review Session', 'REVIEW SESSION'),
-	('Applicants\' Orientation', 'APPLICANTS\' ORIENTATION'),
-	('Competition', 'COMPETITION'),
-	('Outreach', 'OUTREACH'),
-	('Fundraising', 'FUNDRAISING'),
-	('Others', 'OTHERS'),
+	('Seminar', 'Seminar'),
+	('Workshop', 'Workshop'),
+	('Convention', 'Convention'),
+	('Review Session', 'Review Session'),
+	('Applicants\' Orientation', 'Applicants\' Orientation'),
+	('Competition', 'Competition'),
+	('Outreach', 'Outreach'),
+	('Fundraising', 'Fundraising'),
+	('Others', 'Others'),
 )
 '''
 SCOPE_CHOICES = (
@@ -146,8 +146,8 @@ class Event(models.Model):
 	date_posted = models.DateTimeField(default = timezone.now)
 	date_start = models.DateField(default = timezone.now)
 	date_end = models.DateField(default = timezone.now)
-	time_start = models.TimeField(default=None, blank=True, null=True)
-	time_end = models.TimeField(default=None, blank=True, null=True)
+	time_start = models.TimeField(default=timezone.now, blank=True, null=True)
+	time_end = models.TimeField(default=timezone.now, blank=True, null=True)
 	event_type = models.CharField(max_length = 100, default=None, blank=True, null=True, choices=EVENT_TYPE)
 	venue = models.CharField(max_length = 500, default=None, blank=True, null=True)
 	
