@@ -174,10 +174,14 @@ def personal_calendar(request):
 				'author': event.author,
 				'color': 'default'
 			})
-
+	
+	announcement = Announcement.objects.all().filter(event=joined.first())
+	for event in joined:
+		announcement = announcement | Announcement.objects.all().filter(event=event)
+		
 	context = {
 		'org' : request.user.is_staff,
-		'announcements' : Announcement.objects.all().filter(date_posted__range=[start_week, end_week]),
+		'announcements' : announcement,
 		'id'  : request.user.pk,
 		'date' : datetime.date.today(),
 		'data' : data,
