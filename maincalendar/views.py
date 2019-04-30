@@ -88,7 +88,7 @@ def daily_view(request):
 	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})	
 
 def announcements_view(request):
-	return render(request, 'maincalendar/announcement_view.html', {'announcement_list': Announcement.objects.all().order_by('date_posted')})
+	return render(request, 'maincalendar/announcement_view.html', {'announcement_list': Announcement.objects.all().order_by('-date_posted')})
 
 def addparticipant(request):
 	if request.GET.get('event') != None:

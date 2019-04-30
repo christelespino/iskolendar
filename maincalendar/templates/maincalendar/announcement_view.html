@@ -5,13 +5,22 @@
 		Created the template
  -->
 {% extends "maincalendar/index.html" %}
+{% load static %}
 {% block content %}
-
-{% for announcement in announcement_list %}
-	<h6> {{ announcement.date_posted }} </h6>
-	<h3> {{ announcement.subject }} </h3>
-	<h5> {{ announcement.event }} </h5>
-	<h6> {{ announcement.body }} </h6>
-
-{% endfor %}			  
+	<div class="title-header">
+			<p>
+				<a class="back-button" href="{% url 'maincalendar' %}">
+	          		<img src="{% static 'maincalendar/Back_Arrow.png' %}"/>
+	          	</a>
+	          	<b>All Announcements</b>
+	        </p>
+	</div>
+	{% for announcement in announcement_list %}
+	<div class="mt-1 px-5 py-2 border-top">
+			<h4><b> {{ announcement.event }} </b></h4>
+			<h5> {{ announcement.subject }} </h5>
+			<p style="font-size: 9pt;">{{ announcement.date_posted }}</p>
+			<p>{{ announcement.body }}</p>
+	</div>		  
+	{% endfor %}	
 {% endblock content %}
