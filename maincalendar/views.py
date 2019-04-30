@@ -30,7 +30,10 @@
 		added error message for addparticipant
 03/27/2019
 	Patrick Joseph Sanchez
-    	added addbookmark and removebookmark function		  	
+    	added addbookmark and removebookmark function	
+04/22/2019
+	Allure Tanquintic
+		edited personal_calendar function	  	
 '''
 
 from django.shortcuts import render, redirect
@@ -202,7 +205,7 @@ class EventDetailView(DetailView):
 			for x in context['object'].participants.all():
 				par.append(Profile.objects.filter(user = x).first())
 			context['participants'] = par 
-			
+
 		return context
 
 class EventCreateView(LoginRequiredMixin, CreateView):

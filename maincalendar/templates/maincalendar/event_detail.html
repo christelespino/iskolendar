@@ -15,6 +15,9 @@ Allure Tanquintic
 04/09/2019
 	Allure Tanquintic
 		Updated UI    	
+04/23/2019
+	Allure Tanquintic
+		Fixed Bookmarks and Join event UI
  -->
 
 {% extends "maincalendar/index.html" %}
@@ -33,25 +36,6 @@ Allure Tanquintic
 	<div class = "pt-2 px-4">
 		<span style = "font-size: 13pt;">Hosted By: {{ org }}</span>
 		<hr>
-		<!-- {% if user.is_authenticated%}
-			 	{% if not user.is_staff %}
-					{% if user_bookmarked %}
-					    <form action="{% url 'removebookmark' %}" method="GET">
-							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<span data-toggle="tooltip" data-placement="bottom" title="Remove bookmark">
-								<input class="bm" type="image" src="{% static 'maincalendar/bm-filled.svg' %}" alt=”submit” name=”submit”>
-							</span>
-						</form>
-					{% else %}
-						<form action="{% url 'addbookmark' %}" method="GET">
-							<input type="hidden" value="{{ object.id }}" name="event" id="event">
-							<span data-toggle="tooltip" data-placement="bottom" title="Bookmark this event">
-								<input class="bm" type="image" src="{% static 'maincalendar/bm-hollow.svg' %}" alt=”submit” name=”submit”>
-							</span>
-						</form>
-					{% endif %}
-				{% endif %}
-			{% endif %} -->
 	</div>
 
 	<div class="columnsContainer">
@@ -164,7 +148,7 @@ Allure Tanquintic
 		</div>
 	</div>  
 	<!-- {% if user.is_authenticated%}
-		{% if user.is_staff %}
+		{% if user.is_staff and id == object.author.pk %}
 			<a class="btn btn-edit-delete mt-2 mr-2 ml-2" href="{% url 'event-update' object.id%}"><b>Edit</b></a>
 			<a class="btn btn-edit-delete mt-2" href="{% url 'event-delete' object.id%}"><b>Delete</b></a>
 		{% endif %}

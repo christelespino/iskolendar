@@ -78,13 +78,13 @@
         center: 'title',
         right: 'next'
       },
-      dateClick: function(info) {
-        alert('clicked ' + info.date);
-        // alert('Event: ' + info.title); 
-      },
-      eventClick: function(calEvent, jsEvent, view) {
-          alert('Event: ' + calEvent.end);
-      },
+      // dateClick: function(info) {
+      //   alert('clicked ' + info.date);
+      //   // alert('Event: ' + info.title); 
+      // },
+      // eventClick: function(calEvent, jsEvent, view) {
+      //     alert('Event: ' + calEvent.title);
+      // },
       eventLimit: true, // allow "more" link when too many events
       events: [                   // get event details 
         {% for event in data %}
@@ -212,6 +212,7 @@
         </div>
       </div>
     </div>
+
       {% if org%}
         <a class="addbutton announcement" href="{% url 'announcement-create' %}">
           <img src="{% static 'maincalendar/add.png' %}"/>
@@ -223,15 +224,15 @@
           {% for event in data %}
           <a href="{% url 'event-detail' event.id%}">
             <ul id='rcolumn' class="list-group">
-              <li class="list-group-item-light ml-4">
+              <li class="list-group-item-light ml-4 shortenlines">
                 <h5> {{ event.title }}</h5>
                 <!-- <h6><form action="{% url 'daily-view' %}" method="GET">
                   <input type="hidden" value="{{ event.date_start }}" name="date" id="date">
                   <input type="submit" value="{{ event.date_start }}">  
                 </form></h6> -->
               </li>
-              <li class="list-group-item-light ml-4">
-                <p> {{ event.description }} </p>
+              <li class="list-group-item-light ml-4 shortenlines">
+                <p> {{ event.description|linebreaks }} </p>
               </li>
               <li align="center">
                 <!-- <a class="btn btn-custom mt-2" href="{% url 'event-detail' event.id%}">Details</a> -->
@@ -254,13 +255,5 @@
       </a>
     {% endif %}
   </div> 
-
-<script>
-	$(document).ready(function(){
-	  $("#myBtn").click(function(){
-	    $("#myModal").modal();
-	  });
-	});
-</script>
 </body>
 </html>
