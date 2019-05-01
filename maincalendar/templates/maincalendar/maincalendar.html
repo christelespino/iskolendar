@@ -206,7 +206,7 @@
           <img src="{% static 'maincalendar/add.png' %}"/>
         </a>
       {% endif %}
-
+ 
       <div class="rightbottomColumn">
         {% if events %}
           {% for event in events %}
@@ -216,7 +216,9 @@
                 <h5> {{ event.title }}</h5>
               </li>
               <li class="list-group-item-light ml-4 shortenlines">
-                <p> By: {{ event.orgname }} </p>
+                <p style="font-size: 9pt;"> By: {{ event.orgname }} </p>
+              </li>
+              <li class="list-group-item-light ml-4 shortenlines">  
                 <p> {{ event.description|linebreaks }} </p>
               </li>
               <li align="center">
