@@ -235,7 +235,7 @@
                 <p style="font-size: 9pt;"> By: {{ event.orgname }} </p>
               </li>
               <li class="list-group-item-light ml-4 shortenlines"> 
-                <p> {{ event.description|linebreaks }} </p>
+                {{ event.description|linebreaks }}
               </li>
               <li align="center">
                 <!-- <a class="btn btn-custom mt-2" href="{% url 'event-detail' event.id%}">Details</a> -->

@@ -9,7 +9,7 @@
 {% block content %}
 	<div class="title-header">
 			<p>
-				<a class="back-button" href="{% url 'maincalendar' %}">
+				<a class="back-button" href="{{request.META.HTTP_REFERER}}">
 	          		<img src="{% static 'maincalendar/Back_Arrow.png' %}"/>
 	          	</a>
 	          	<b>All Announcements</b>

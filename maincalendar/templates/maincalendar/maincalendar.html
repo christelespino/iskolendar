@@ -209,6 +209,28 @@
  
       <div class="rightbottomColumn">
         {% if events %}
+          {% if orgevents %}
+          {% for event in orgevents %}
+            <a href="{% url 'event-detail' event.id%}">
+            <ul id='rcolumn' class="list-group">
+              <li class="list-group-item-light ml-4 shortenlines">
+                <h5> {{ event.title }}</h5>
+              </li>
+              <li class="list-group-item-light ml-4 shortenlines">
+                <p style="font-size: 9pt;"> By: {{ event.orgname }} </p>
+              </li>
+              <li class="list-group-item-light ml-4 shortenlines">  
+                {{ event.description|linebreaks }}
+              </li>
+              <li align="center">
+                  <a class="btn btn-custom mt-2 mr-2 ml-2" href="{% url 'event-update' event.id%}"><b>Edit</b></a>
+                  <a class="btn btn-custom mt-2" href="{% url 'event-delete' event.id%}"><b>Delete</b></a>
+              </li>
+            </ul>
+          </a>
+          {% endfor %}
+
+          {% else %}
           {% for event in events %}
           <a href="{% url 'event-detail' event.id%}">
             <ul id='rcolumn' class="list-group">
@@ -219,17 +241,12 @@
                 <p style="font-size: 9pt;"> By: {{ event.orgname }} </p>
               </li>
               <li class="list-group-item-light ml-4 shortenlines">  
-                <p> {{ event.description|linebreaks }} </p>
-              </li>
-              <li align="center">
-                {% if org and id == event.author.pk %}
-                      <a class="btn btn-custom mt-2 mr-2 ml-2" href="{% url 'event-update' event.id%}"><b>Edit</b></a>
-                      <a class="btn btn-custom mt-2" href="{% url 'event-delete' event.id%}"><b>Delete</b></a>
-                {% endif %}
+                {{ event.description|linebreaks }}
               </li>
             </ul>
           </a>
           {% endfor %}
+          {% endif %}
         {% else %}
           <p class="mt-3" style="text-align: center"> Nothing to display. </p>
         {% endif %}

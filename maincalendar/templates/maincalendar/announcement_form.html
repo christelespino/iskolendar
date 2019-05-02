@@ -17,7 +17,7 @@ Patrick Joseph Sanchez
 			</fieldset>
 			<div class="form-group">
 				<button class="btn btn-announcementform" type="submit">Post</button>
-				<a class="btn btn-announcementform ml-3" href="{% url 'maincalendar' %}">Back</a>
+				<a class="btn btn-announcementform ml-3" href="{{request.META.HTTP_REFERER}}">Back</a>
 			</div>
 		</form>
 	</div>
