@@ -79,7 +79,7 @@ Allure Tanquintic
 				</span>
 			</p>
 			{% if object.venue %}
-			<p style="color: #008080;">Venue: 
+			<p style="color: #008080; margin-left: 5px;">Venue: 
 				<span style="color: #000">
 					{{ object.venue }}
 				</span>
@@ -98,6 +98,15 @@ Allure Tanquintic
 				<span style="color: #000">
 					{% if object.college %}
 						{{ object.college }}
+					{% else %}
+						None
+					{% endif %}
+				</span>
+			</p>
+			<p style="color: #008080; margin-left: 5px;">Participant Limit: 
+				<span style="color: #000">
+					{% if object.limit %}
+						{{ object.limit }}
 					{% else %}
 						None
 					{% endif %}
