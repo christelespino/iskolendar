@@ -88,7 +88,8 @@ def maincalendar(request):
 		x.orgname = Profile.objects.filter(user=x.author).first().organization
 	if request.user.is_staff:
 		context['orgevents'] = Event.objects.filter(author=request.user.pk)
-		context['announcements'] = Announcement.objects.filter(author=request.user.pk)	
+		context['announcements'] = Announcement.objects.filter(author=request.user.pk)
+		context['orgname'] = Profile.objects.filter(user=request.user).first().organization	
 	return render(request, 'maincalendar/maincalendar.html', context)
 	
 def daily_view(request):
