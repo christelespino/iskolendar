@@ -98,6 +98,14 @@ def daily_view(request):
 		day = datetime.datetime.strptime(request.GET.get('date'), '%B %d, %Y')
 	return render(request, 'maincalendar/daily_view.html', {'event_list': Event.objects.filter(date_start=day).order_by('time_start')})	
 
+def events_view(request):
+	context = {
+		'events': Event.objects.all().order_by('date_start')
+	}
+	for x in context['events']:
+		x.orgname = Profile.objects.filter(user=x.author).first().organization
+	return render(request, 'maincalendar/events_view.html', context)
+
 def announcements_view(request):
 	return render(request, 'maincalendar/announcement_view.html', {'announcement_list': Announcement.objects.all().order_by('-date_posted')})
 

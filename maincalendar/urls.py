@@ -37,6 +37,7 @@ urlpatterns = [
     path('event/new/', staff_member_required(EventCreateView.as_view()), name='event-create'),
     path('event/<int:pk>/update', EventUpdateView.as_view(), name='event-update'),
     path('event/<int:pk>/delete', EventDeleteView.as_view(), name='event-delete'),
+    url(r'event/all/', views.events_view, name='event-view'),
     url(r'event/$', views.daily_view, name='daily-view'),
     #url(r'event/$/join', views.addparticipant, name='addparticipant'),
 
