@@ -116,6 +116,15 @@
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  View All
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'announcement-view' %}">Announcements</a>
+                  <a class="dropdown-item" href="{% url 'event-view' %}">Events</a>
+                </div>
+              </li>
               {% if user.is_authenticated %}
                 {% if not org %}
                 <li class ="nav-item">
@@ -141,9 +150,7 @@
     <div class="leftColumn" id='calendar'></div>
 
     <!-- SECTION LABELS -->
-    <a class="announcementHeader" href="{% url 'announcement-view' %}">
-      <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
-    </a>
+    <img class="announcementHeader" src="{% static 'maincalendar/announcements.png' %}">
     <img class="eventsHeader" src="{% static 'maincalendar/events.png' %}">
 
     <div class="scroll">
@@ -172,7 +179,7 @@
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="announcement-item{{ announcement.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal fade" id="announcement-item{{ announcement.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 9999;">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header sidepane-modal">
@@ -197,20 +204,17 @@
           {% else %}
             <p class="mt-3" style="text-align: center"> No announcement this week. </p>
           {% endif %}
-          <ul style="list-style: none;">
-          <li align="center">
-            <a class="btn btn-custom mt-2 mr-2 ml-2" href="{% url 'announcement-view' %}"><b>View All</b></a>
-          </li>
-          </ul>
         </div>
       </div>
     </div>
 
       {% if org%}
-        <a class="addbutton announcement" href="{% url 'announcement-create' %}">
+        <a class="addbutton announcement" href="{% url 'announcement-create' %}" title="Add announcement">
           <img src="{% static 'maincalendar/add.png' %}"/>
         </a>
       {% endif %}
+        
+    
  
       <div class="rightbottomColumn">
         {% if events %}
@@ -255,25 +259,13 @@
         {% else %}
           <p class="mt-3" style="text-align: center"> Nothing to display. </p>
         {% endif %}
-        <ul style="list-style: none;">
-          <li align="center">
-            <a class="btn btn-custom mt-2 mr-2 ml-2" href="{% url 'event-view' %}"><b>View All</b></a>
-          </li>
-        </ul>
       </div> 
     </div>
     {% if org%}
-      <a class="addbutton event" href="{% url 'event-create' %}">
+      <a class="addbutton event" href="{% url 'event-create' %}" title="Add event">
         <img src="{% static 'maincalendar/add.png' %}"/>
       </a>
     {% endif %}
   </div>
-
-  <!-- <script type="text/template" id="myHtml">
-    <h6><form action="{% url 'daily-view' %}" method="GET">
-      <input type="hidden" value="{{ event.date_start }}" name="date" id="date">
-      <input type="submit" value="{{ event.date_start }}">  
-    </form></h6>
-  </script> -->
 </body>
 </html>

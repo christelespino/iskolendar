@@ -129,6 +129,15 @@
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  View All
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'announcement-view' %}">Announcements</a>
+                  <a class="dropdown-item" href="{% url 'event-view' %}">Events</a>
+                </div>
+              </li>
               {% if user.is_authenticated %}
                 {% if not org %}
                 <li class ="nav-item active">
@@ -153,9 +162,7 @@
   <div class="columnsContainer">
 	  <div class="leftColumn" id='calendar'></div>
     <!-- SECTION LABELS -->
-    <a class="announcementHeader" href="{% url 'announcement-view' %}">
-      <img class="imgshadow" src="{% static 'maincalendar/announcements.png' %}">
-    </a>
+    <img class="imgshadow announcementHeader" src="{% static 'maincalendar/announcements.png' %}">
     <img class="eventsHeader" src="{% static 'maincalendar/events.png' %}">
 
     <div class="scroll">
@@ -184,7 +191,7 @@
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="announcement-item{{ announcement.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal fade" id="announcement-item{{ announcement.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 9999;">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header sidepane-modal">

@@ -10,20 +10,24 @@
 {% load crispy_forms_tags %}
 {% block content %}
 	<div class="content-section">
-		<form method="POST">
-			{% csrf_token %}
-			<fieldset>
-				<legend class="border-bottom mb-4">Log in</legend>
-				{{ form|crispy }}
-			</fieldset>
-			<div class="form-group">
-				<button class="btn btn-custom" type="submit" style="height: 35px; font-size: 10pt;">LOGIN</button>
+		<div class="row text-white">
+            <div class="col-sm-6 offset-sm-3 text-center">
+            	<h1 class="display-4">Welcome to Iskolendar!</h1>
+				<form method="POST">
+					{% csrf_token %}
+					<fieldset>
+						{{ form|crispy }}
+					</fieldset>
+					<div class="form-group">
+						<button class="btn btn-custom" type="submit" style="height: 35px; font-size: 10pt;">LOGIN</button>
+					</div>
+				</form>
+				<div class="border-top pt-3">
+					<small class="text-muted">
+						Need an account? <a class="ml-2" href="{% url 'register' %}">Sign up</a>
+					</small>
+				</div>
 			</div>
-		</form>
-		<div class="border-top pt-3">
-			<small class="text-muted">
-				Need an account? <a class="ml-2" href="{% url 'register' %}">Sign up</a>
-			</small>
 		</div>
 	</div>
 {% endblock content %}

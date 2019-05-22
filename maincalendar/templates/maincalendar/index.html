@@ -56,6 +56,15 @@ Allure Tanquintic
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  View All
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'announcement-view' %}">Announcements</a>
+                  <a class="dropdown-item" href="{% url 'event-view' %}">Events</a>
+                </div>
+              </li>
               {% if user.is_authenticated %}
                 {% if not user.is_staff %}
                   <li class ="nav-item">
