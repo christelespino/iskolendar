@@ -69,12 +69,14 @@ def maincalendar(request):
 
 	events = Event.objects.all()
 	for event in events:
+		dateend = event.date_end + datetime.timedelta(1)
 		data.append({
 			'id': event.id,
 			'title': event.title,
 			'start': event.date_start.strftime('%Y-%m-%d'),
-			'end': event.date_end.strftime('%Y-%m-%d'),
+			'end': dateend.strftime('%Y-%m-%d'),
 		})
+		#print(event.date_start.strftime('%Y-%m-%d'), event.date_end.strftime('%Y-%m-%d'))
 	context = {
 		'events' : Event.objects.all().order_by('date_start'),
 		'org' : request.user.is_staff,
